@@ -1,0 +1,9 @@
+# Dependencies
+node_modules/
+
+# OS
+.DS_Store
+
+# Build / env (pro případ budoucího buildu v kořeni)
+dist
+*.local

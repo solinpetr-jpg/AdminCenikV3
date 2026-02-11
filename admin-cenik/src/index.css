@@ -1,0 +1,3239 @@
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Button big – primární (Figma DS node 333-370) */
+  --btn-primary: #C91617;
+  --btn-primary-hover: #A91214;
+  --btn-primary-ring: 0 0 0 3px rgba(201, 22, 23, 0.28);
+}
+
+body {
+  margin: 0;
+}
+
+/* Šířka obsahu stránky objednávky */
+.order-page-container {
+  max-width: 1340px;
+  background-color: #f8f9fa !important; /* stejné pozadí jako zbytek stránky (Bootstrap bg-light) */
+}
+
+/* Mezera mezi kartami a akordeony na stránce objednávky */
+.order-page-section-gap {
+  margin-top: 32px;
+}
+
+/* Heading/H1 – Figma Design System */
+.order-page-title {
+  color: #000;
+  font-family: "Open Sans", sans-serif;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 130%;
+}
+
+/* Podtitul stránky objednávky */
+.order-page-subtitle {
+  color: #65758b;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+/* Podtituly v kartách (např. „Prioritní zobrazení a zvýraznění“) */
+.card-subtitle-text {
+  color: #65758b;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* osmičková soustava: 3 × 8px */
+}
+
+/* Hodnota „bez DPH“ (vatNote) – stejná barva jako podtitul (Prioritní zobrazení a zvýraznění) */
+.package-card-price-block .small.text-muted,
+.premium-service-price-block .small.text-muted {
+  color: #65758b !important;
+}
+
+/* Label „MNOŽSTVÍ“ v kartách */
+.card-quantity-label {
+  color: #65758b;
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0; /* osmičková soustava - letter-spacing není násobek 8px, použito 0 */
+  text-transform: uppercase;
+  margin-bottom: 0 !important; /* vzdálenost k badge se slevou je zajištěna přes padding-top wrapperu */
+}
+
+/* Heading/H2 – Figma Design System */
+.heading-h2 {
+  color: #000;
+  font-family: "Open Sans", sans-serif;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 130%;
+}
+
+/* Sekce Prémiové služby – Figma Design System (node 18542-4951) */
+.premium-section-header {
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  padding: 16px 24px; /* osmičková soustava: 2 × 8px, 3 × 8px */
+  min-height: 72px !important;
+  height: 72px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+.premium-section-header .premium-section-title {
+  color: #000;
+  font-family: "Open Sans", sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 130%;
+  margin: 0;
+}
+.premium-section-header .premium-section-summary {
+  color: #65758b;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+/* Pozadí ikon v akordeonech a sekcích - zaoblené rohy 12px, velikost 40x40px */
+.premium-section-header .rounded,
+.premium-section-header .rounded.d-flex,
+.premium-section-header .rounded.d-flex.align-items-center,
+.premium-section-header .rounded.d-flex.align-items-center.justify-content-center,
+.premium-section-header .rounded.d-flex.align-items-center.justify-content-center.flex-shrink-0,
+.order-items-cart-header .rounded,
+.order-items-cart-header .rounded.d-flex,
+.order-items-cart-header .rounded.d-flex.align-items-center.justify-content-center,
+section .rounded.d-flex.align-items-center.justify-content-center,
+section .col-auto .rounded.d-flex.align-items-center.justify-content-center {
+  border-radius: 12px !important;
+  width: 40px !important;
+  height: 40px !important;
+}
+
+/* Accordion sekce Prémiové služby – Figma (node 18542-4965); overflow-hidden z JSX = čisté zaoblení */
+.premium-accordion {
+  background-color: #fff;
+  border-radius: 16px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+.premium-accordion .premium-section-header {
+  box-shadow: none;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+.premium-accordion .premium-section-header:hover {
+  background-color: #f8f9fa;
+}
+/* Stav vybrané (otevřené) položky – všechny akordeony */
+.premium-accordion--open .premium-section-header {
+  background: #EEF0F7;
+  border-bottom: none; /* linka je na contentu, ne na headeru */
+}
+.premium-accordion--open .premium-section-header:hover {
+  background: #EEF0F7;
+}
+.premium-section-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+.premium-section-content--open {
+  max-height: 1200px;
+  overflow: visible;
+  transition: max-height 0.35s ease-in;
+  border-radius: 0 0 16px 16px; /* spodní rohy odpovídají kontejneru */
+}
+
+/* Obsah sekce Položky objednávky – mezera pod tabulkou uvnitř sekce */
+#order-items-content {
+  margin-bottom: 0;
+  padding-bottom: 24px;
+}
+/* Wrapper pro řádek - má background přes celou šířku */
+.premium-service-row-wrapper {
+  width: 100%;
+  border-bottom: 1px solid #eef0f8;
+  transition: background-color 0.2s ease; /* plynulá změna barvy pozadí */
+  background-color: white; /* výchozí bílé pozadí */
+}
+.premium-service-row-wrapper:last-child {
+  border-bottom: none;
+}
+
+/* Rozbalený akordeon – poslední řádek má zaoblené spodní rohy (souhra s overflow-hidden kontejneru) */
+.premium-section-content--open .premium-service-row-wrapper:last-child,
+.order-accordion-section--open .premium-section-content .premium-service-row-wrapper:last-child {
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+/* Vnitřní řádek s obsahem - má padding; flex-start aby pravý blok měl vždy stejnou úroveň */
+.premium-service-row {
+  font-family: "Open Sans", sans-serif;
+  min-height: 96px; /* fixní výška jako při aplikované slevě (text slevy + varianty + cena) */
+  align-items: flex-start; /* pravý blok zarovnán nahoru, pak min-height + center = stejná úroveň textu slevy */
+  padding-left: 24px !important; /* osmičková soustava: 3 × 8px - padding zleva */
+  padding-right: 24px !important; /* osmičková soustava: 3 × 8px - padding zprava */
+}
+
+/* Grid layout: stejné sloupce pro všechny řádky – discount-label vždy na stejném X */
+.premium-service-row--grid {
+  display: grid;
+  /* První sloupec min 200px, aby pravý blok (label) začínal vždy na stejném X bez ohledu na délku názvu */
+  grid-template-columns: minmax(200px, 1fr) 144px 224px 128px 128px;
+  gap: 16px;
+  align-items: center;
+}
+.premium-service-row-title {
+  min-width: 0;
+}
+.premium-service-order-badge {
+  display: flex;
+  height: 24px;
+  width: 72px; /* osmičková soustava: 9 × 8px - fixní šířka pro text PŘIDÁNO, aby neskákal */
+  min-width: 72px;
+  padding: 0 8px; /* osmičková soustava: 1 × 8px */
+  justify-content: center;
+  align-items: center;
+  border-radius: 9999px; /* zakulacený (pill-shaped) dle screenshotu */
+  background: rgba(22, 162, 73, 0.2);
+  border: none;
+  color: #16a249;
+  font-family: Inter, sans-serif; /* stejný font jako NEJOBLÍBENĚJŠÍ */
+  font-size: 10px;
+  font-weight: 900; /* stejný font-weight jako NEJOBLÍBENĚJŠÍ (Black/Extra Bold) */
+  white-space: nowrap; /* text se nezalamuje na více řádků */
+  letter-spacing: 0.02em; /* stejný letter-spacing jako NEJOBLÍBENĚJŠÍ */
+  text-transform: uppercase; /* text verzálkami */
+  flex-shrink: 0; /* badge se nezmenšuje */
+}
+/* Placeholder pro rezervaci místa v TOP kartě, aby headline neskákal při zobrazení badge „OBJEDNÁVKA“ */
+.premium-service-order-badge--placeholder {
+  visibility: hidden;
+  pointer-events: none;
+  width: 72px; /* osmičková soustava: 9 × 8px - stejná šířka jako skutečný badge */
+  min-width: 72px;
+  background: transparent;
+  color: transparent;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 130%;
+  text-transform: uppercase;
+}
+/* Vybraná služba v akordeonu (přidané kusy) – světle šedé pozadí */
+.premium-service-row--selected {
+  background-color: #eef0f8 !important;
+}
+.premium-service-row--first {
+  background-color: white; /* výchozí je bílá */
+}
+.premium-service-row--first.premium-service-row--selected {
+  background-color: #eef0f8 !important;
+}
+.premium-service-title {
+  font-weight: 600;
+  font-size: 16px;
+  color: #000;
+}
+
+/* Obecný accordion sekce – Figma (18542-5106, 18542-5122, 18542-5135); overflow-hidden z JSX = čisté zaoblení */
+.order-accordion-section {
+  background-color: #fff;
+  border-radius: 16px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.order-accordion-section .premium-section-header {
+  box-shadow: none;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+/* Možnosti objednávky – bílé pozadí (bez šedého), vždy rozvinuté */
+#options-heading {
+  cursor: default !important;
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+  height: auto !important;
+  min-height: 72px !important;
+  align-items: center !important;
+  background-color: #fff !important;
+}
+
+#options-heading:hover {
+  background-color: #fff !important;
+}
+
+/* Fakturační údaje - spacing a vertikální centrování */
+#billing-heading {
+  padding-top: 16px !important;
+  padding-bottom: 16px !important; /* osmičková soustava: 2 × 8px */
+  height: auto !important;
+  min-height: 72px !important;
+  align-items: center !important;
+}
+
+#billing-heading .d-flex.flex-column {
+  justify-content: center;
+}
+.order-accordion-section .premium-section-header:hover {
+  background-color: #f8f9fa;
+}
+/* Stav vybrané (otevřené) položky – všechny akordeony */
+.order-accordion-section--open .premium-section-header {
+  background: #EEF0F7;
+  border-bottom: none; /* linka je na contentu, ne na headeru */
+}
+.order-accordion-section--open .premium-section-header:hover {
+  background: #EEF0F7;
+}
+.order-accordion-section .premium-section-content {
+  /* border-top odstraněn */
+}
+
+/* Hover efekt na řádky v akordeonech – stejný jako hover na akordeon hlavičku */
+.premium-service-row-wrapper:hover {
+  background-color: #f8f9fa !important;
+}
+
+/* Pravý blok: explicitní 4 sloupce (bez subgrid kvůli kompatibilitě), label vždy ve sloupci 1 = stejné X */
+.premium-service-row--grid .premium-service-row-right {
+  grid-column: 2 / -1;
+  display: grid;
+  grid-template-columns: 144px 224px 128px 128px;
+  align-items: center;
+  min-height: 96px;
+}
+/* Fallback pro řádky bez --grid (např. jiné sekce) */
+.premium-service-row-right {
+  display: flex;
+  align-items: center;
+  gap: 16px; /* osmičková soustava: 2 × 8px */
+  flex-shrink: 0; /* pravý blok se nezmenšuje */
+  min-height: 96px; /* stejná výška jako řádek – obsah (text slevy + tlačítka) je vycentrovaný, takže vždy na stejné úrovni */
+}
+/* Wrapper pro CTA/stepper s fixními rozměry, aby spacing neskákal při přepnutí */
+.premium-service-cta-wrapper {
+  width: 128px; /* osmičková soustava: 16 × 8px - fixní šířka (stejná jako CTA), stepper je 120px ale zarovnaný vlevo */
+  min-width: 128px;
+  height: 48px; /* fixní výška, aby neskákalo při přepnutí CTA ↔ stepper */
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* stepper zarovnaný vlevo v rámci wrapperu */
+  flex-shrink: 0;
+}
+.premium-service-discount-note {
+  width: 144px; /* osmičková soustava: 18 × 8px - fixní šířka pro text slevy, aby neskákal */
+  min-width: 144px;
+  height: 24px; /* osmičková soustava: 3 × 8px */
+  color: #16a249; /* stejná barva jako text OBJEDNÁVKA */
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px; /* osmičková soustava: 3 × 8px */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* oba texty zarovnané doprava v buňce */
+  flex-shrink: 0; /* text slevy se nezmenšuje */
+  align-self: center; /* stejná vertikální úroveň jako tlačítka 3x/5x/10x */
+  text-align: right !important;
+}
+/* Placeholder pro text slevy v PremiumServicesAccordion */
+.premium-service-discount-note--placeholder {
+  visibility: hidden;
+  pointer-events: none;
+}
+/* Placeholder pro varianty množství v PremiumServicesAccordion */
+.premium-service-quantity-placeholder {
+  width: 224px; /* osmičková soustava: 28 × 8px - fixní šířka pro 3 varianty (64px + gap + 64px + gap + 64px) */
+  min-width: 224px;
+  min-height: 48px; /* osmičková soustava: 6 × 8px - výška varianty množství (včetně místa pro badge nahoře) */
+  flex-shrink: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+/* Typo ceny v akordeonu */
+.premium-service-price-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-height: 56px; /* osmičková soustava: 7 × 8px */
+  height: 56px; /* fixní výška, aby neskákala mezi stavy */
+  width: 128px; /* osmičková soustava: 16 × 8px - fixní šířka pro blok ceny, aby neskákal */
+  min-width: 128px;
+  text-align: right;
+  flex-shrink: 0; /* blok ceny se nezmenšuje */
+  justify-content: flex-end; /* obsah zarovnaný dolů */
+}
+/* Typografie ceny v akordeonu – Heading/H5 */
+.premium-service-price-block .package-card-price {
+  color: #000;
+  font-family: "Open Sans", sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 130%;
+}
+
+/* Package card background – Figma Design System (node 18577-45436) */
+.package-card {
+  background-color: #ffffff;
+  border: none;
+  border-radius: 16px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+.package-card .card-body {
+  padding: 24px;
+}
+
+/* Karta „Nejoblíbenější“ – badge nad kartou dle screenshotu */
+.package-card--favorite {
+  border: 2px solid #1b3c98;
+  border-radius: 16px !important;
+  background: rgba(27, 60, 152, 0.005); /* #1B3C98 s 0.5% opacity */
+}
+.package-card-favorite-badge,
+.badge.package-card-favorite-badge,
+.package-card--favorite .badge.package-card-favorite-badge,
+.badge.rounded-pill.package-card-favorite-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  top: -16px; /* osmičková soustava: -2 × 8px */
+  left: 24px; /* zarovnání s nadpisem (padding card-body) */
+  background-color: #1b3c98 !important; /* modrá barva z designu */
+  color: #fff !important;
+  font-family: Inter, sans-serif !important;
+  font-size: 12px !important; /* větší badge */
+  font-weight: 900 !important; /* Black (Ultra Bold) */
+  letter-spacing: 0.02em !important;
+  padding: 8px 24px !important; /* osmičková soustava: 1 × 8px, 3 × 8px */
+  border-radius: 9999px !important; /* zakulacený (pill-shaped) dle screenshotu */
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  z-index: 1;
+}
+/* Nadpisy v TOP kartách (např. Inzerát práce 30 + Banner do kraje) */
+.package-card .card-title {
+  color: #000000;
+  font-family: "Open Sans", sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 130%; /* 23.4px */
+}
+
+/* Cena v TOP kartě – Heading/H3 */
+.package-card-price {
+  color: #000;
+  font-family: "Open Sans", sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 130%;
+}
+
+/* Text slevy pod přepínačem množství – dle Figmy (node 18577-45601). Fixní výška slotu, aby karta neměnila výšku. */
+.package-card-discount-note {
+  height: 24px; /* osmičková soustava: 3 × 8px - fixní výška – stejná s/bez slevy, slot vždy rezervován */
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+  color: #16a249; /* stejná barva jako text OBJEDNÁVKA */
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* osmičková soustava: 3 × 8px */
+}
+
+/* „Přidejte 3+ ks pro slevu“ – stejná barva jako podtitul; zarovnání doprava jako „Sleva 15%“ */
+.package-card-add-for-discount-note,
+.premium-service-add-for-discount-note {
+  color: #65758b !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+  text-align: right !important;
+  justify-content: flex-end !important;
+}
+
+/* Dělící čára v TOP kartě – barva #E1E7EF, 12 px mezera pod čárou */
+.package-card-hr {
+  border: none;
+  border-top: 1px solid #E1E7EF;
+  margin-bottom: 16px; /* osmičková soustava: 2 × 8px */
+}
+
+/* Blok ceny – fixní min. výška jako při aktivní slevě; zarovnání doprava dolů dle Figmy (node 18577-45601) */
+.package-card-price-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  min-height: 88px;
+  text-align: right;
+}
+
+/* Původní cena při slevě – přeškrtnutá, menší, šedá */
+.package-card-price-old {
+  color: #65758b;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* osmičková soustava: 3 × 8px */
+  text-decoration: line-through;
+  height: 24px; /* osmičková soustava: 3 × 8px - fixní výška, aby zabíral místo i když je skrytý */
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Quantity switcher – Figma Design System (node 18577-45436) */
+.quantity-option-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 64px; /* stejná šířka jako tlačítko, aby badge byl vycentrovaný */
+}
+/* Wrapper pro varianty množství - padding-top pro vzdálenost 8px od "MNOŽSTVÍ" k badge (pouze v kartě, ne v řádku akordeonu) */
+.d-flex.flex-wrap[role="group"][aria-label="Množství"] {
+  padding-top: 16px; /* osmičková soustava: 2 × 8px - vzdálenost 8px od "MNOŽSTVÍ" k badge (16px padding - 8px top badge = 8px) */
+}
+/* V řádku akordeonu žádný padding-top – text „Přidejte 3+ ks“ i „Sleva 15%“ mají být na stejné úrovni jako tlačítka 3x/5x/10x */
+.premium-service-row-right .d-flex.flex-wrap[role="group"][aria-label="Množství"] {
+  padding-top: 0;
+}
+/* Slevové badge (-10%, -15%, -20%) – zelené, plné, dle screenshotu */
+.quantity-badge {
+  position: absolute;
+  top: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%); /* vycentrování badge nad tlačítkem */
+  background-color: #16a249;
+  color: #ffffff;
+  font-size: 0.625rem;
+  font-weight: 900 !important; /* Black (Ultra Bold) pro slevové badge */
+  padding: 0.125rem 0.375rem;
+  border-radius: 9999px;
+  white-space: nowrap;
+  z-index: 1;
+  border: none;
+}
+
+/* Badge počtu položek v košíku - stejný styl jako slevové badge */
+.order-items-cart-count-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #16a249;
+  color: #ffffff;
+  font-size: 0.625rem;
+  font-weight: 900 !important;
+  padding: 0.125rem 0.375rem;
+  border-radius: 9999px;
+  white-space: nowrap;
+  z-index: 10;
+  border: none;
+  min-width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+/* Buttons/Pill small – Figma Design System (node 18588-10179) */
+.quantity-option {
+  background-color: #eef0f8;
+  color: #0f1729;
+  border: 2px solid transparent; /* stejná tloušťka jako .active, aby karta neskákala při přepnutí */
+  border-radius: 8px;
+  /* Fixní rozměry podle Figmy: 64 × 46 px */
+  width: 64px;
+  height: 48px; /* osmičková soustava: 6 × 8px */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px; /* osmičková soustava: 2 × 8px */
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
+  text-align: center;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+.quantity-option:hover {
+  background-color: #e2e5f0;
+}
+/* Vybrané množství (např. 5x) – Figma Design System (node 18588-10179). Border zůstává 2px, jen barva. */
+.quantity-option.active {
+  background-color: #1b3c98; /* tmavě modrá vybraná varianta */
+  border: 2px solid #1b3c98;
+  color: #ffffff;
+  font-weight: 700; /* Bold pro vybrané varianty */
+  box-shadow: 0 1px 2px rgba(27, 60, 152, 0.08);
+}
+
+/* CTA Buttons/Button big – Figma Design System */
+.btn-cta {
+  color: var(--Basic-White, #fff);
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 130%;
+}
+
+/* Primární CTA „Přidat“ v TOP kartě – Figma (node 18577-45546): větší, 130px, sloupec, zarovnání doleva */
+.btn-cta--primary {
+  display: flex;
+  width: 128px; /* osmičková soustava: 16 × 8px */
+  height: 48px;
+  min-height: 48px;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 24px; /* osmičková soustava: 1 × 8px, 3 × 8px */
+  box-sizing: border-box;
+  border-radius: 32px;
+  background: var(--btn-primary);
+  border: none;
+  box-shadow: none;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-cta--primary:hover {
+  background: var(--btn-primary-hover) !important;
+  box-shadow: var(--btn-primary-ring) !important;
+}
+.btn-cta--primary .btn-cta__icon,
+.btn-cta--primary .btn-cta__label {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.btn-cta--primary .btn-cta__icon {
+  line-height: 1;
+  font-size: 18px;
+}
+.btn-cta--primary .btn-cta__label {
+  line-height: 130%;
+}
+
+/* CTA v akordeonech – Figma (node 18577-1613): stejný vzhled jako primární CTA */
+.premium-service-row .btn-cta--primary,
+.premium-accordion .btn-cta--primary {
+  width: 128px;
+  height: 48px;
+  min-height: 48px;
+  border-radius: 32px;
+  background: var(--btn-primary);
+  border: none;
+  color: #fff;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 130%;
+}
+
+/* Řádek CTA/stepper + cena – fixní min. výška, aby karta neskákala při kliku na Přidat nebo výběru varianty */
+.package-card-actions-row {
+  min-height: 48px;
+}
+.package-card .btn-cta--primary {
+  height: 48px;
+}
+
+/* Stepper – layout dle screenshotu: všechny prvky v jednom kontejneru */
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0; /* bez mezer mezi prvky */
+  width: 120px; /* přesně: 40px (-) + 40px (číslo) + 40px (+) */
+  min-width: 120px;
+  height: 48px; /* stejná výška jako CTA tlačítko, aby neskákalo */
+  min-height: 48px;
+  background-color: #eef0f8;
+  border-radius: 9999px; /* pill-shaped kontejner */
+  padding: 0;
+  overflow: hidden;
+  flex-shrink: 0; /* stepper se nezmenšuje */
+}
+.stepper-btn {
+  flex: 0 0 40px; /* pevná šířka tlačítka bez roztahování */
+  width: 40px;
+  height: 48px; /* stejná výška jako kontejner stepperu */
+  min-height: 48px;
+  padding: 0;
+  border: none;
+  border-radius: 0; /* bez zaoblení, je v kontejneru */
+  background-color: transparent;
+  color: #2f3543;
+  font-family: "Open Sans", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+.stepper-btn:hover:not(:disabled) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.stepper-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.stepper-input {
+  flex: 0 0 40px; /* pevná šířka inputu bez roztahování */
+  width: 40px;
+  min-width: 40px;
+  height: 48px; /* stejná výška jako kontejner stepperu */
+  min-height: 48px;
+  border: none;
+  border-radius: 0; /* bez zaoblení, je v kontejneru */
+  background-color: transparent;
+  color: #2f3543;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 130%;
+  text-align: center;
+  -moz-appearance: textfield;
+  flex-shrink: 0; /* input se nezmenšuje */
+}
+.stepper-input:focus {
+  outline: none;
+}
+.stepper-input::-webkit-outer-spin-button,
+.stepper-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Košík - Položky objednávky */
+.order-items-cart-header {
+  background-color: #EEF0F7 !important; /* světle modrá - vždy rozbalené */
+  border-bottom: 1px solid #EBEDF3;
+  cursor: default !important; /* není klikatelné */
+}
+
+/* Kontejner pro portál lišty – vždy dole na obrazovce, nad obsahem */
+#order-items-bar-root {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+#order-items-bar-root > * {
+  pointer-events: auto;
+}
+
+/* Spodní lišta s přehledem košíku (Položky objednávky) – full-width wrapper */
+.order-items-bottom-bar {
+  position: fixed !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 9999 !important;
+  min-height: 80px;
+  padding: 12px 0;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid #E2E6F0;
+  display: flex;
+  align-items: center;
+}
+
+/* Vnitřní container zarovnaný s hlavním obsahem (order-page-container: max-width 1340px + stejné paddingy) */
+.order-items-bottom-bar-inner {
+  width: 100%;
+  max-width: 1340px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 12px;
+  padding-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+@media (min-width: 576px) {
+  .order-items-bottom-bar-inner {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (min-width: 768px) {
+  .order-items-bottom-bar-inner {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+@media (min-width: 992px) {
+  .order-items-bottom-bar-inner {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+.order-items-bottom-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0; /* pro správné fungování text-truncate */
+}
+
+/* Stejná ikona a pozadí jako v sekci Položky objednávky: 40×40 px, border-radius 12px */
+.order-items-bottom-bar-icon-wrapper {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background-color: #1B3C981A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1B3C98;
+}
+
+/* Stejný styl kolečka s počtem jako v sekci Položky objednávky */
+.order-items-bottom-bar-count-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0.125rem 0.375rem;
+  border-radius: 9999px;
+  background-color: #16a249;
+  color: #ffffff;
+  font-size: 0.625rem;
+  font-weight: 900 !important;
+  white-space: nowrap;
+  z-index: 10;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.order-items-bottom-bar-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.order-items-bottom-bar-title {
+  font-family: "Open Sans", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #000;
+  line-height: 1.2;
+}
+
+.order-items-bottom-bar-subtitle {
+  font-size: 13px;
+  color: #64748B;
+  max-width: 360px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.order-items-bottom-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.order-items-bottom-bar-price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  font-family: "Open Sans", sans-serif;
+}
+
+.order-items-bottom-bar-price-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #0F172A;
+}
+
+.order-items-bottom-bar-price-label {
+  font-size: 13px;
+  font-weight: 400;
+  color: #64748B;
+}
+
+/* Sekundární tlačítko – šipka dolů = scroll dolů k detailu */
+.order-items-bottom-bar-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: 32px;
+  font-size: 14px;
+  font-weight: 600;
+  box-sizing: border-box;
+  background-color: transparent !important;
+  border: 1px solid #C91617 !important;
+  color: #C91617 !important;
+  box-shadow: none !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.order-items-bottom-bar-button:hover:not(:disabled) {
+  background-color: rgba(201, 22, 23, 0.06) !important;
+  border-color: #C91617 !important;
+  color: #C91617 !important;
+  box-shadow: var(--btn-primary-ring) !important;
+}
+
+@media (max-width: 768px) {
+  .order-items-bottom-bar-inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .order-items-bottom-bar-right {
+    justify-content: space-between;
+  }
+}
+
+/* Terciární tlačítko v prázdném košíku – Prohlédnout balíčky (hover dle screenshotu) */
+.order-items-cart-browse-packages-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-radius: 32px;
+  background: transparent;
+  color: #C91617;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.order-items-cart-browse-packages-btn:hover {
+  background-color: rgba(201, 22, 23, 0.06);
+  border-color: #C91617;
+  color: #C91617;
+  box-shadow: var(--btn-primary-ring);
+}
+
+/* Po kliknutí (focus bez hoveru) žádný vyplněný vzhled – jen červený text */
+.order-items-cart-browse-packages-btn:focus {
+  outline: none;
+}
+
+.order-items-cart-browse-packages-btn:focus:not(:hover) {
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+/* Ring jen při ovládání klávesnicí (Tab) */
+.order-items-cart-browse-packages-btn:focus-visible {
+  box-shadow: var(--btn-primary-ring);
+}
+
+.order-items-cart-browse-packages-arrow {
+  font-size: 1em;
+  line-height: 1;
+}
+
+/* Prázdný stav košíku – levitující ikona balíčku (modrý rámeček a podbarvení) */
+.order-items-cart-empty-state-icon-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 20px;
+  border: 2px dashed rgba(27, 60, 152, 0.4);
+  border-radius: 16px;
+  background: rgba(27, 60, 152, 0.08);
+}
+
+.order-items-cart-empty-state-icon-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.order-items-cart-empty-state-package {
+  color: #1B3C98;
+  flex-shrink: 0;
+}
+
+.order-items-cart-empty-state-title {
+  font-weight: 600;
+  color: #374151;
+}
+
+/* Styly pro tabulku v košíku */
+.order-items-cart-header .premium-section-title {
+  font-family: "Open Sans", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #000;
+}
+.order-items-cart table thead th,
+.order-items-cart table.table thead th,
+table.order-items-cart thead th {
+  color: #65758B !important;
+  text-align: center !important; /* výchozí zarovnání na střed */
+  font-family: Inter, sans-serif !important;
+  font-size: 14px !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  line-height: 24px !important; /* osmičková soustava: 3 × 8px */
+  border-bottom: 1px solid #eef0f8;
+  padding: 16px 0 !important; /* osmičková soustava: 2 × 8px - horizontální padding 0px zleva i zprava pro všechny názvy sloupců */
+  margin-left: -8px; /* osmičková soustava: -1 × 8px - zmenšit mezeru mezi sloupci */
+  margin-right: -8px; /* osmičková soustava: -1 × 8px - zmenšit mezeru mezi sloupci */
+}
+/* První sloupec "Položka" - zarovnání vlevo */
+.order-items-cart table thead th:first-child,
+.order-items-cart table.table thead th:first-child,
+table.order-items-cart thead th:first-child {
+  text-align: left !important;
+}
+/* Sloupec 2 "Sleva" - zarovnání vlevo */
+.order-items-cart table thead th:nth-child(2),
+.order-items-cart table.table thead th:nth-child(2),
+table.order-items-cart thead th:nth-child(2) {
+  text-align: left !important;
+}
+/* Padding pro tabulku v košíku - 0px zleva (padding je na prvním sloupci), 24px zprava */
+.order-items-cart .table-responsive,
+.order-items-cart div.table-responsive {
+  padding-left: 0 !important; /* padding zleva je na prvním sloupci */
+  padding-right: 24px !important; /* osmičková soustava: 3 × 8px - padding zprava od okraje tabulky */
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  overflow-x: auto !important; /* na menších šířkách horizontální scroll místo rozbití layoutu */
+}
+.order-items-cart table tbody td {
+  padding: 16px 0; /* horizontální padding 0px zleva i zprava pro všechny buňky */
+  vertical-align: middle;
+  font-size: 16px; /* jednotná velikost fontu pro všechny texty v řádku */
+  text-align: center; /* výchozí zarovnání na střed */
+  margin-left: -8px; /* osmičková soustava: -1 × 8px - zmenšit mezeru mezi sloupci */
+  margin-right: -8px; /* osmičková soustava: -1 × 8px - zmenšit mezeru mezi sloupci */
+}
+/* První sloupec "Položka" - zarovnání vlevo */
+.order-items-cart table tbody td:first-child {
+  text-align: left !important;
+}
+/* Sloupec 2 "Sleva" - zarovnání vlevo */
+.order-items-cart table tbody td:nth-child(2) {
+  text-align: left !important;
+}
+/* Sloupec Množství – buňka jako flex kontejner, stepper vždy na střed a nevytéká */
+.order-items-cart.table-order-items table tbody td.col-quantity,
+.order-items-cart.table-order-items tbody td.col-quantity,
+table.order-items-cart.table-order-items tbody td.col-quantity {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+}
+.order-items-cart.table-order-items tbody td.col-quantity .stepper {
+  flex-shrink: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+/* Sloupce 5–7 (Cena za kus, Celkem bez DPH, Celkový budget) – zarovnání doprava (pouze table-order-items; třídy .col-* viz níže) */
+table.order-items-cart.table-order-items thead th:nth-child(5),
+table.order-items-cart.table-order-items thead th:nth-child(6),
+table.order-items-cart.table-order-items thead th:nth-child(7) {
+  text-align: right !important;
+}
+.order-items-cart.table-order-items table tbody td:nth-child(5),
+.order-items-cart.table-order-items table tbody td:nth-child(6),
+.order-items-cart.table-order-items table tbody td:nth-child(7),
+table.order-items-cart.table-order-items tbody td:nth-child(5),
+table.order-items-cart.table-order-items tbody td:nth-child(6),
+table.order-items-cart.table-order-items tbody td:nth-child(7) {
+  text-align: right !important;
+}
+/* Cenové buňky – span s cenou doprava (jedno pravidlo, bez zbytečného center) */
+.order-items-cart.table-order-items tbody td:nth-child(5) span.package-card-price,
+.order-items-cart.table-order-items tbody td:nth-child(6) span.package-card-price,
+.order-items-cart.table-order-items tbody td:nth-child(7) span.package-card-price,
+table.order-items-cart.table-order-items tbody td:nth-child(5) span.package-card-price,
+table.order-items-cart.table-order-items tbody td:nth-child(6) span.package-card-price,
+table.order-items-cart.table-order-items tbody td:nth-child(7) span.package-card-price {
+  display: inline-block !important;
+  width: 100% !important;
+  font-size: 14px !important;
+  text-align: right !important;
+}
+/* Poslední sloupec (ikona koše) - zarovnání na střed, padding zmenšen o 8px zleva a zprava */
+.order-items-cart table thead th:last-child,
+.order-items-cart table.table thead th:last-child,
+table.order-items-cart thead th:last-child {
+  text-align: center !important;
+  padding: 16px 0 !important; /* osmičková soustava: 2 × 8px - padding 0px zleva a zprava */
+  margin-left: -8px !important; /* osmičková soustava: -1 × 8px - zmenšit mezeru mezi sloupci */
+  margin-right: 0 !important; /* poslední sloupec nemá negativní margin zprava */
+}
+.order-items-cart table tbody td:last-child,
+.order-items-cart table.table tbody td:last-child,
+table.order-items-cart tbody td:last-child {
+  text-align: center !important;
+  padding: 16px 0 !important; /* padding 0px zleva a zprava */
+  margin-left: -8px !important; /* osmičková soustava: -1 × 8px - zmenšit mezeru mezi sloupci */
+  margin-right: 0 !important; /* poslední sloupec nemá negativní margin zprava */
+}
+.order-items-cart table tbody td:last-child button {
+  margin: 0 auto;
+  display: block;
+}
+/* Tlačítka slev v košíku - styly podle Figmy (node 18587-8903) */
+.order-items-cart .quantity-option {
+  width: auto;
+  min-width: 40px; /* osmičková soustava: 5 × 8px - zmenšeno z 48px */
+  height: 40px; /* osmičková soustava: 5 × 8px */
+  padding: 8px; /* vertikálně i horizontálně 8px zleva i zprava */
+  font-size: 14px !important;
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  white-space: nowrap; /* text se nezalamuje */
+  border-radius: 9999px; /* pill shape podle Figmy - zachováno */
+  flex-shrink: 0; /* tlačítka se nezmenšují */
+}
+.order-items-cart .quantity-option.active {
+  background-color: #1b3c98; /* stejná tmavě modrá jako u variant množství */
+  border: 2px solid #1b3c98;
+  color: #ffffff;
+  font-weight: 500;
+  box-shadow: 0 1px 2px rgba(27, 60, 152, 0.08); /* stejný shadow jako u variant množství */
+}
+.order-items-cart .quantity-option:not(.active) {
+  background-color: #eef0f8;
+  color: #0f1729;
+  border: 2px solid transparent;
+}
+.order-items-cart .quantity-option:not(.active):hover {
+  background-color: #e2e5f0;
+}
+/* Zajistit, aby se řádky nezalamovaly */
+.order-items-cart table tbody td {
+  white-space: nowrap;
+  overflow: visible; /* aby se tlačítka zobrazila celá */
+}
+.order-items-cart table tbody td:first-child {
+  white-space: nowrap !important; /* název položky na jednom řádku */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 24px !important; /* osmičková soustava: 3 × 8px - odsazení zleva */
+  padding-right: 0 !important; /* padding zprava 0px jako u ostatních sloupců */
+  margin-left: 0 !important; /* první sloupec nemá negativní margin zleva */
+  margin-right: -8px !important; /* osmičková soustava: -1 × 8px - zmenšit mezeru mezi sloupci */
+}
+.order-items-cart table tbody td:first-child span {
+  white-space: nowrap !important; /* zajistit, že span také nezalamuje */
+  display: inline-block;
+}
+/* První sloupec v hlavičce tabulky - padding zleva 24px, zprava 0px */
+.order-items-cart table thead th:first-child,
+.order-items-cart table.table thead th:first-child,
+table.order-items-cart thead th:first-child {
+  padding-left: 24px !important; /* osmičková soustava: 3 × 8px - odsazení zleva */
+  padding-right: 0 !important; /* padding zprava 0px jako u ostatních sloupců */
+  margin-left: 0 !important; /* první sloupec nemá negativní margin zleva */
+  margin-right: -8px !important; /* osmičková soustava: -1 × 8px - zmenšit mezeru mezi sloupci */
+}
+.order-items-cart table tbody td:nth-child(2) {
+  white-space: nowrap; /* slevová tlačítka na jednom řádku */
+  overflow: visible;
+}
+
+/* Nová struktura s classNames pro lepší kontrolu layoutu */
+/* Tabulka: fixed layout, šířka 100 %, min-width pro responzivní scroll na úzkých viewportech */
+.order-items-cart.table-order-items,
+table.order-items-cart.table-order-items {
+  width: 100% !important;
+  min-width: 800px !important; /* pod touto šířkou kontejner scrolluje (overflow-x: auto) */
+  table-layout: fixed !important;
+}
+
+/* Základní spacing pro všechny sloupce - desktop default */
+/* Thead th - vertikální padding 16px (osmičková soustava: 2 × 8px) */
+.order-items-cart.table-order-items table thead th,
+.order-items-cart.table-order-items thead th,
+table.order-items-cart.table-order-items thead th {
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+  vertical-align: middle !important;
+  white-space: nowrap !important;
+}
+
+/* Tbody td - vertikální padding 16px */
+.order-items-cart.table-order-items table tbody td,
+.order-items-cart.table-order-items tbody td,
+table.order-items-cart.table-order-items tbody td {
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+  vertical-align: middle !important;
+  white-space: nowrap !important;
+}
+
+/* Šířky sloupců – Položka o 16px užší (Sleva se posune doleva); ostatní vyvážené */
+table.order-items-cart.table-order-items col.col-item,
+table.order-items-cart.table-order-items thead th.col-item { width: calc(22% - 16px) !important; }
+table.order-items-cart.table-order-items thead th.col-discount { width: 24% !important; }
+/* Sloupec Platnost – šířka pro celý nápis „Platnost“, centrováno */
+.order-items-cart.table-order-items table thead th.col-validity,
+table.order-items-cart.table-order-items thead th.col-validity { width: 7% !important; min-width: 100px !important; text-align: center !important; }
+/* Sloupec Množství – min. šířka pro stepper (120px) + padding, aby nevytékal */
+.order-items-cart.table-order-items table thead th.col-quantity,
+table.order-items-cart.table-order-items thead th.col-quantity { width: 9% !important; min-width: 140px !important; }
+/* Cenové sloupce – min-width aby se nic nepřekrývalo (hlavička + částky na 1 řádku) */
+.order-items-cart.table-order-items table thead th.col-unit-price,
+table.order-items-cart.table-order-items thead th.col-unit-price { width: 11% !important; min-width: 170px !important; box-sizing: border-box !important; }
+.order-items-cart.table-order-items table thead th.col-total-without-vat,
+table.order-items-cart.table-order-items thead th.col-total-without-vat { width: 11% !important; min-width: 190px !important; box-sizing: border-box !important; }
+.order-items-cart.table-order-items table thead th.col-budget,
+table.order-items-cart.table-order-items thead th.col-budget { width: 11% !important; min-width: 190px !important; box-sizing: border-box !important; }
+.order-items-cart.table-order-items table thead th.col-actions,
+table.order-items-cart.table-order-items thead th.col-actions { width: 7% !important; }
+
+/* První sloupec "Položka" – název na 2 řádky, stabilní šířka (žádný skok při odebírání položky) */
+.order-items-cart.table-order-items table thead th.col-item,
+.order-items-cart.table-order-items thead th.col-item,
+table.order-items-cart.table-order-items thead th.col-item {
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+  padding-left: 24px !important;
+  padding-right: 8px !important;
+  white-space: normal !important;
+  text-align: left !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+
+.order-items-cart.table-order-items table tbody td.col-item,
+.order-items-cart.table-order-items tbody td.col-item,
+table.order-items-cart.table-order-items tbody td.col-item {
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+  padding-left: 24px !important;
+  padding-right: 8px !important;
+  white-space: normal !important;
+  text-align: left !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+
+.order-items-cart.table-order-items td.col-item span,
+.order-items-cart.table-order-items table tbody td.col-item span,
+table.order-items-cart.table-order-items td.col-item span,
+table.order-items-cart.table-order-items tbody td.col-item span {
+  white-space: normal !important;
+  display: block !important;
+}
+
+/* Název položky - maximálně 2 řádky s ellipsis pokud je delší */
+.order-items-cart.table-order-items td.col-item .item-name,
+.order-items-cart.table-order-items table tbody td.col-item .item-name,
+table.order-items-cart.table-order-items td.col-item .item-name,
+table.order-items-cart.table-order-items tbody td.col-item .item-name {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 100% !important;
+  line-height: 1.4 !important;
+  max-height: calc(1.4em * 2) !important; /* 2 řádky */
+}
+
+/* Pravé sloupce - konzistentní spacing (col-actions má vlastní pravidlo s menším paddingem) */
+/* Thead th - vertikální padding 16px (osmičková soustava: 2 × 8px) */
+.order-items-cart.table-order-items table thead th.col-discount,
+.order-items-cart.table-order-items table thead th.col-validity,
+.order-items-cart.table-order-items table thead th.col-quantity,
+.order-items-cart.table-order-items table thead th.col-unit-price,
+.order-items-cart.table-order-items table thead th.col-total-without-vat,
+.order-items-cart.table-order-items table thead th.col-budget,
+.order-items-cart.table-order-items thead th.col-discount,
+.order-items-cart.table-order-items thead th.col-validity,
+.order-items-cart.table-order-items thead th.col-quantity,
+.order-items-cart.table-order-items thead th.col-unit-price,
+.order-items-cart.table-order-items thead th.col-total-without-vat,
+.order-items-cart.table-order-items thead th.col-budget,
+table.order-items-cart.table-order-items thead th.col-discount,
+table.order-items-cart.table-order-items thead th.col-validity,
+table.order-items-cart.table-order-items thead th.col-quantity,
+table.order-items-cart.table-order-items thead th.col-unit-price,
+table.order-items-cart.table-order-items thead th.col-total-without-vat,
+table.order-items-cart.table-order-items thead th.col-budget {
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+  padding-left: 8px !important; /* osmičková soustava: 1 × 8px */
+  padding-right: 8px !important; /* osmičková soustava: 1 × 8px */
+  white-space: nowrap !important;
+}
+
+/* th.col-actions – kompaktní padding (8px vert., 0 horiz. = o 8px méně zleva i zprava) */
+.order-items-cart.table-order-items table thead th.col-actions,
+.order-items-cart.table-order-items thead th.col-actions,
+table.order-items-cart.table-order-items thead th.col-actions {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Sloupec Množství – zarovnání na střed (hlavička i buňka); posun doprava o 8px */
+.order-items-cart.table-order-items table thead th.col-quantity,
+.order-items-cart.table-order-items thead th.col-quantity,
+table.order-items-cart.table-order-items thead th.col-quantity,
+.order-items-cart.table-order-items table tbody td.col-quantity,
+.order-items-cart.table-order-items tbody td.col-quantity,
+table.order-items-cart.table-order-items tbody td.col-quantity {
+  text-align: center !important;
+  padding-left: 16px !important; /* 8px base + 8px posun sloupce doprava */
+}
+
+/* Hlavička Platnost – vždy na středu sloupce (thead) */
+.order-items-cart.table-order-items table thead th.col-validity,
+.order-items-cart.table-order-items thead th.col-validity,
+table.order-items-cart.table-order-items thead th.col-validity {
+  text-align: center !important;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+  vertical-align: middle !important;
+}
+
+/* Cenové sloupce – hlavička i buňky: zarovnání doprava (bez flexu, aby se nerozbily řádky) */
+.order-items-cart.table-order-items table thead th.col-unit-price,
+.order-items-cart.table-order-items table thead th.col-total-without-vat,
+.order-items-cart.table-order-items table thead th.col-budget,
+.order-items-cart.table-order-items thead th.col-unit-price,
+.order-items-cart.table-order-items thead th.col-total-without-vat,
+.order-items-cart.table-order-items thead th.col-budget,
+table.order-items-cart.table-order-items thead th.col-unit-price,
+table.order-items-cart.table-order-items thead th.col-total-without-vat,
+table.order-items-cart.table-order-items thead th.col-budget,
+.order-items-cart.table-order-items table tbody td.col-unit-price,
+.order-items-cart.table-order-items table tbody td.col-total-without-vat,
+.order-items-cart.table-order-items table tbody td.col-budget,
+.order-items-cart.table-order-items tbody td.col-unit-price,
+.order-items-cart.table-order-items tbody td.col-total-without-vat,
+.order-items-cart.table-order-items tbody td.col-budget,
+table.order-items-cart.table-order-items tbody td.col-unit-price,
+table.order-items-cart.table-order-items tbody td.col-total-without-vat,
+table.order-items-cart.table-order-items tbody td.col-budget {
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+  text-align: right !important;
+  white-space: nowrap !important;
+  vertical-align: middle !important;
+}
+/* Hlavičky Cena za kus, Celkem bez DPH, Celkový budget – zarovnání doprava, pravý padding 8px */
+.order-items-cart.table-order-items table thead th.col-unit-price,
+.order-items-cart.table-order-items table thead th.col-total-without-vat,
+.order-items-cart.table-order-items table thead th.col-budget,
+.order-items-cart.table-order-items thead th.col-unit-price,
+.order-items-cart.table-order-items thead th.col-total-without-vat,
+.order-items-cart.table-order-items thead th.col-budget,
+table.order-items-cart.table-order-items thead th.col-unit-price,
+table.order-items-cart.table-order-items thead th.col-total-without-vat,
+table.order-items-cart.table-order-items thead th.col-budget {
+  padding-right: 8px !important;
+  text-align: right !important;
+}
+/* Hlavičky Celkem bez DPH a Celkový budget – span vždy doprava */
+.order-items-cart.table-order-items table thead th.col-total-without-vat span,
+.order-items-cart.table-order-items table thead th.col-budget span,
+.order-items-cart.table-order-items thead th.col-total-without-vat span,
+.order-items-cart.table-order-items thead th.col-budget span,
+table.order-items-cart.table-order-items thead th.col-total-without-vat span,
+table.order-items-cart.table-order-items thead th.col-budget span {
+  display: block !important;
+  text-align: right !important;
+  width: 100% !important;
+}
+
+/* Sloupec Sleva – zarovnání vlevo, zalamování tlačítek */
+.order-items-cart.table-order-items table thead th.col-discount,
+.order-items-cart.table-order-items thead th.col-discount,
+table.order-items-cart.table-order-items thead th.col-discount {
+  text-align: left !important;
+  white-space: normal !important;
+  min-width: 0 !important;
+}
+
+/* Sloupec Sleva – kompaktní padding; obsah posunut o 8px doleva (0/16); skupina tlačítek vycentrovaná */
+table.order-items-cart.table-order-items thead th.col-discount {
+  padding-left: 0 !important;
+  padding-right: 16px !important;
+}
+table.order-items-cart.table-order-items tbody td.col-discount {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+  padding-left: 0 !important;
+  padding-right: 16px !important;
+  min-width: 0 !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  white-space: nowrap !important;
+  text-align: center !important;
+}
+table.order-items-cart.table-order-items tbody td.col-discount > div {
+  display: inline-flex; /* šířka podle obsahu, v buňce vycentrováno díky text-align: center na td */
+}
+
+/* Na menších šířkách: Sleva – povolit zalomení tlačítek na 2 řádky */
+@media (max-width: 991px) {
+  table.order-items-cart.table-order-items tbody td.col-discount {
+    white-space: normal !important;
+  }
+  table.order-items-cart.table-order-items tbody td.col-discount > div {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+  }
+}
+
+/* Sloupec Platnost – stejné pravidlo pro header i buňku: center, min-width pro celý nápis „Platnost“ */
+.order-items-cart.table-order-items table thead th.col-validity,
+.order-items-cart.table-order-items thead th.col-validity,
+table.order-items-cart.table-order-items thead th.col-validity,
+.order-items-cart.table-order-items table tbody td.col-validity,
+.order-items-cart.table-order-items tbody td.col-validity,
+table.order-items-cart.table-order-items tbody td.col-validity {
+  text-align: center !important;
+  min-width: 100px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+/* th.col-validity – flex centrování (nezávislé na paddingu), symetrický padding */
+.order-items-cart.table-order-items table thead th.col-validity,
+.order-items-cart.table-order-items thead th.col-validity,
+table.order-items-cart.table-order-items thead th.col-validity {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important; /* fallback pro obsah */
+}
+
+/* Sloupec Platnost – zarovnání na střed (pouze text-align, bez flexu kvůli celistvosti řádků) */
+.order-items-cart.table-order-items table thead th.col-validity,
+.order-items-cart.table-order-items thead th.col-validity,
+table.order-items-cart.table-order-items thead th.col-validity,
+.order-items-cart.table-order-items table tbody td.col-validity,
+.order-items-cart.table-order-items tbody td.col-validity,
+table.order-items-cart.table-order-items tbody td.col-validity {
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+/* Hlavička Platnost – span musí vyplnit celou buňku, aby se text centroval v buňce */
+.order-items-cart.table-order-items table thead th.col-validity span,
+.order-items-cart.table-order-items thead th.col-validity span,
+table.order-items-cart.table-order-items thead th.col-validity span {
+  display: block !important;
+  text-align: center !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+table.order-items-cart.table-order-items tbody td.col-validity span {
+  display: block !important;
+  text-align: center !important;
+  width: 100% !important;
+  overflow: hidden !important;
+  text-overflow: clip !important;
+}
+
+.order-items-cart.table-order-items table tbody td.col-validity,
+.order-items-cart.table-order-items table tbody td.col-validity,
+table.order-items-cart.table-order-items tbody td.col-validity {
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+  white-space: nowrap !important;
+}
+/* tbody td.col-quantity – padding-left 16px (posun doprava o 8px) viz výše v bloku Množství */
+.order-items-cart.table-order-items table tbody td.col-quantity,
+.order-items-cart.table-order-items tbody td.col-quantity,
+table.order-items-cart.table-order-items tbody td.col-quantity {
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+  padding-left: 16px !important;
+  padding-right: 8px !important;
+  white-space: nowrap !important;
+}
+
+.order-items-cart.table-order-items table tbody td.col-actions,
+.order-items-cart.table-order-items tbody td.col-actions,
+table.order-items-cart.table-order-items tbody td.col-actions {
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+  padding-left: 0 !important; /* o 8px méně – užší sloupec akcí */
+  padding-right: 0 !important;
+  white-space: nowrap !important;
+}
+
+/* Cenové sloupce v tbody – min-width (stejné jako hlavička), nowrap, zarovnání doprava, tabular-nums */
+.order-items-cart.table-order-items table tbody td.col-unit-price,
+.order-items-cart.table-order-items table tbody td.col-total-without-vat,
+.order-items-cart.table-order-items table tbody td.col-budget,
+.order-items-cart.table-order-items tbody td.col-unit-price,
+.order-items-cart.table-order-items tbody td.col-total-without-vat,
+.order-items-cart.table-order-items tbody td.col-budget,
+table.order-items-cart.table-order-items tbody td.col-unit-price,
+table.order-items-cart.table-order-items tbody td.col-total-without-vat,
+table.order-items-cart.table-order-items tbody td.col-budget {
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+  text-align: right !important;
+  font-variant-numeric: tabular-nums !important;
+  white-space: nowrap !important;
+  min-width: 0 !important; /* šířku řídí sloupec; min-width na th zajistí sloupec */
+}
+table.order-items-cart.table-order-items tbody td.col-unit-price { min-width: 170px !important; }
+table.order-items-cart.table-order-items tbody td.col-total-without-vat,
+table.order-items-cart.table-order-items tbody td.col-budget { min-width: 190px !important; }
+
+/* Cenové sloupce – číslo a Kč zůstanou spolu (bez zalamování), tabular-nums */
+.order-items-cart.table-order-items td.col-unit-price span,
+.order-items-cart.table-order-items td.col-total-without-vat span,
+.order-items-cart.table-order-items td.col-budget span,
+.order-items-cart.table-order-items table tbody td.col-unit-price span,
+.order-items-cart.table-order-items table tbody td.col-total-without-vat span,
+.order-items-cart.table-order-items table tbody td.col-budget span,
+table.order-items-cart.table-order-items td.col-unit-price span,
+table.order-items-cart.table-order-items td.col-total-without-vat span,
+table.order-items-cart.table-order-items td.col-budget span,
+table.order-items-cart.table-order-items tbody td.col-unit-price span,
+table.order-items-cart.table-order-items tbody td.col-total-without-vat span,
+table.order-items-cart.table-order-items tbody td.col-budget span {
+  font-variant-numeric: tabular-nums !important;
+  white-space: nowrap !important;
+}
+
+/* Responsive úprava - mírně větší spacing na širokých obrazovkách */
+@media (min-width: 1400px) {
+  /* Thead th - zachovat vertikální padding 16px (osmičková soustava: 2 × 8px) */
+  .order-items-cart.table-order-items table thead th,
+  .order-items-cart.table-order-items thead th,
+  table.order-items-cart.table-order-items thead th {
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+    padding-left: 16px !important; /* osmičková soustava: 2 × 8px */
+    padding-right: 16px !important; /* osmičková soustava: 2 × 8px */
+  }
+
+  /* Tbody td - zachovat vertikální padding 16px */
+  .order-items-cart.table-order-items table tbody td,
+  .order-items-cart.table-order-items tbody td,
+  table.order-items-cart.table-order-items tbody td {
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+    padding-left: 16px !important; /* osmičková soustava: 2 × 8px */
+    padding-right: 16px !important; /* osmičková soustava: 2 × 8px */
+  }
+
+  /* První sloupec "Položka" - mírně větší odsazení na velkých obrazovkách */
+  .order-items-cart.table-order-items table thead th.col-item,
+  .order-items-cart.table-order-items thead th.col-item,
+  table.order-items-cart.table-order-items thead th.col-item {
+    padding-left: 24px !important; /* mírně větší než default 20px */
+  }
+
+  .order-items-cart.table-order-items table tbody td.col-item,
+  .order-items-cart.table-order-items tbody td.col-item,
+  table.order-items-cart.table-order-items tbody td.col-item {
+    padding-left: 24px !important; /* mírně větší než default 20px */
+  }
+
+  /* Cenové sloupce - mírně větší spacing na velkých obrazovkách */
+  .order-items-cart.table-order-items table thead th.col-unit-price,
+  .order-items-cart.table-order-items table thead th.col-total-without-vat,
+  .order-items-cart.table-order-items table thead th.col-budget,
+  .order-items-cart.table-order-items thead th.col-unit-price,
+  .order-items-cart.table-order-items thead th.col-total-without-vat,
+  .order-items-cart.table-order-items thead th.col-budget,
+  table.order-items-cart.table-order-items thead th.col-unit-price,
+  table.order-items-cart.table-order-items thead th.col-total-without-vat,
+  table.order-items-cart.table-order-items thead th.col-budget {
+    padding-left: 8px !important; /* osmičková soustava: 1 × 8px */
+    padding-right: 8px !important; /* osmičková soustava: 1 × 8px */
+  }
+
+  .order-items-cart.table-order-items table tbody td.col-unit-price,
+  .order-items-cart.table-order-items table tbody td.col-total-without-vat,
+  .order-items-cart.table-order-items table tbody td.col-budget,
+  .order-items-cart.table-order-items tbody td.col-unit-price,
+  .order-items-cart.table-order-items tbody td.col-total-without-vat,
+  .order-items-cart.table-order-items tbody td.col-budget,
+  table.order-items-cart.table-order-items tbody td.col-unit-price,
+  table.order-items-cart.table-order-items tbody td.col-total-without-vat,
+  table.order-items-cart.table-order-items tbody td.col-budget {
+    padding-left: 8px !important; /* osmičková soustava: 1 × 8px */
+    padding-right: 8px !important; /* osmičková soustava: 1 × 8px */
+  }
+
+  /* Cenové sloupce - stále kompaktní i na velkých obrazovkách */
+  .order-items-cart.table-order-items table thead th.col-unit-price,
+  .order-items-cart.table-order-items table thead th.col-total-without-vat,
+  .order-items-cart.table-order-items table thead th.col-budget,
+  .order-items-cart.table-order-items thead th.col-unit-price,
+  .order-items-cart.table-order-items thead th.col-total-without-vat,
+  .order-items-cart.table-order-items thead th.col-budget,
+  table.order-items-cart.table-order-items thead th.col-unit-price,
+  table.order-items-cart.table-order-items thead th.col-total-without-vat,
+  table.order-items-cart.table-order-items thead th.col-budget {
+    padding-left: 8px !important; /* osmičková soustava: 1 × 8px */
+    padding-right: 8px !important; /* osmičková soustava: 1 × 8px */
+  }
+
+  .order-items-cart.table-order-items table tbody td.col-unit-price,
+  .order-items-cart.table-order-items table tbody td.col-total-without-vat,
+  .order-items-cart.table-order-items table tbody td.col-budget,
+  .order-items-cart.table-order-items tbody td.col-unit-price,
+  .order-items-cart.table-order-items tbody td.col-total-without-vat,
+  .order-items-cart.table-order-items tbody td.col-budget,
+  table.order-items-cart.table-order-items tbody td.col-unit-price,
+  table.order-items-cart.table-order-items tbody td.col-total-without-vat,
+  table.order-items-cart.table-order-items tbody td.col-budget {
+    padding-left: 8px !important; /* osmičková soustava: 1 × 8px */
+    padding-right: 8px !important; /* osmičková soustava: 1 × 8px */
+  }
+
+  /* Pravé sloupce - větší spacing na velkých obrazovkách */
+  .order-items-cart.table-order-items table thead th.col-discount,
+  .order-items-cart.table-order-items table thead th.col-validity,
+  .order-items-cart.table-order-items table thead th.col-quantity,
+  .order-items-cart.table-order-items table thead th.col-unit-price,
+  .order-items-cart.table-order-items table thead th.col-total-without-vat,
+  .order-items-cart.table-order-items table thead th.col-budget,
+  .order-items-cart.table-order-items thead th.col-discount,
+  .order-items-cart.table-order-items thead th.col-validity,
+  .order-items-cart.table-order-items thead th.col-quantity,
+  .order-items-cart.table-order-items thead th.col-unit-price,
+  .order-items-cart.table-order-items thead th.col-total-without-vat,
+  .order-items-cart.table-order-items thead th.col-budget,
+  table.order-items-cart.table-order-items thead th.col-discount,
+  table.order-items-cart.table-order-items thead th.col-validity,
+  table.order-items-cart.table-order-items thead th.col-quantity,
+  table.order-items-cart.table-order-items thead th.col-unit-price,
+  table.order-items-cart.table-order-items thead th.col-total-without-vat,
+  table.order-items-cart.table-order-items thead th.col-budget {
+    padding-left: 24px !important; /* větší spacing na velkých obrazovkách */
+    padding-right: 24px !important;
+  }
+
+  .order-items-cart.table-order-items table thead th.col-discount,
+  .order-items-cart.table-order-items thead th.col-discount,
+  table.order-items-cart.table-order-items thead th.col-discount {
+    padding-left: 16px !important; /* posun o 8px doleva oproti ostatním (24→16) */
+    padding-right: 24px !important;
+  }
+  .order-items-cart.table-order-items table tbody td.col-discount,
+  .order-items-cart.table-order-items tbody td.col-discount,
+  table.order-items-cart.table-order-items tbody td.col-discount {
+    padding-left: 0 !important;
+    padding-right: 16px !important;
+  }
+
+  .order-items-cart.table-order-items table tbody td.col-validity,
+  .order-items-cart.table-order-items tbody td.col-validity,
+  table.order-items-cart.table-order-items tbody td.col-validity {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+  .order-items-cart.table-order-items table tbody td.col-quantity,
+  .order-items-cart.table-order-items tbody td.col-quantity,
+  table.order-items-cart.table-order-items tbody td.col-quantity {
+    padding-left: 16px !important; /* posun Množství doprava o 8px */
+    padding-right: 8px !important;
+  }
+
+  /* Sloupec Platnost – na velkých obrazovkách zachovat centrování */
+  .order-items-cart.table-order-items table thead th.col-validity,
+  .order-items-cart.table-order-items thead th.col-validity,
+  table.order-items-cart.table-order-items thead th.col-validity {
+    text-align: center !important;
+  }
+  .order-items-cart.table-order-items table tbody td.col-validity,
+  .order-items-cart.table-order-items tbody td.col-validity,
+  table.order-items-cart.table-order-items tbody td.col-validity {
+    text-align: center !important;
+  }
+
+  .order-items-cart.table-order-items table tbody td.col-unit-price,
+  .order-items-cart.table-order-items table tbody td.col-total-without-vat,
+  .order-items-cart.table-order-items table tbody td.col-budget,
+  .order-items-cart.table-order-items tbody td.col-unit-price,
+  .order-items-cart.table-order-items tbody td.col-total-without-vat,
+  .order-items-cart.table-order-items tbody td.col-budget,
+  table.order-items-cart.table-order-items tbody td.col-unit-price,
+  table.order-items-cart.table-order-items tbody td.col-total-without-vat,
+  table.order-items-cart.table-order-items tbody td.col-budget {
+    padding-left: 8px !important; /* cenové sloupce mají vždy 8px */
+    padding-right: 8px !important;
+  }
+
+  /* Hlavičky Cena za kus, Celkem bez DPH, Celkový budget – pravý padding 8px */
+  .order-items-cart.table-order-items table thead th.col-unit-price,
+  .order-items-cart.table-order-items table thead th.col-total-without-vat,
+  .order-items-cart.table-order-items table thead th.col-budget,
+  .order-items-cart.table-order-items thead th.col-unit-price,
+  .order-items-cart.table-order-items thead th.col-total-without-vat,
+  .order-items-cart.table-order-items thead th.col-budget,
+  table.order-items-cart.table-order-items thead th.col-unit-price,
+  table.order-items-cart.table-order-items thead th.col-total-without-vat,
+  table.order-items-cart.table-order-items thead th.col-budget {
+    padding-right: 8px !important;
+  }
+
+  /* Sloupec akcí – o 8px méně zleva i zprava (16px místo 24px na velkých obrazovkách) */
+  .order-items-cart.table-order-items table thead th.col-actions,
+  .order-items-cart.table-order-items thead th.col-actions,
+  table.order-items-cart.table-order-items thead th.col-actions,
+  .order-items-cart.table-order-items table tbody td.col-actions,
+  .order-items-cart.table-order-items tbody td.col-actions,
+  table.order-items-cart.table-order-items tbody td.col-actions {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
+/* Footer styling - horizontální layout se třemi bloky */
+.order-items-cart.table-order-items tfoot td,
+.order-items-cart-footer-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* Footer block - každý blok s labelem a hodnotou */
+.order-items-cart-footer-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  text-align: left;
+  height: 100%;
+  padding: 24px; /* jednotný vnitřní padding bez extra mezery dole */
+  border-radius: 0;
+  background-color: #fff; /* bílé pozadí pro všechny bloky */
+  border: none;
+  border-right: 1px solid #E5E7EB; /* předělová čára vpravo */
+}
+
+/* Zaoblení vnějších rohů u prvního a posledního bloku = čisté vykreslení s wrapperem */
+.order-items-cart-footer-block:first-child {
+  border-radius: 16px 0 0 16px;
+}
+.order-items-cart-footer-block:last-child {
+  border-right: none; /* poslední box bez čáry vpravo */
+  border-radius: 0 16px 16px 0;
+}
+
+.order-items-cart-footer-label {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: none; /* běžný text jako u poznámky pod tabulkou, ne verzálky */
+  letter-spacing: 0;
+  color: #9CA3AF; /* text-gray-400 */
+  line-height: 1.4;
+  margin-bottom: 0;
+  margin-top: 0;
+  white-space: normal; /* může zůstat na 2 řádcích */
+}
+
+/* Info ikona - malý kruh s borderem */
+.order-items-cart-info-icon {
+  display: inline-flex;
+  height: 16px;
+  width: 16px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid #D1D5DB; /* border-gray-300 */
+  font-size: 11px;
+  line-height: 1;
+  color: #9CA3AF; /* text-gray-400 */
+  font-weight: normal;
+  text-transform: none;
+  cursor: help;
+}
+
+/* Popover u ikonky DPH – text ze screenshotu, zobrazení při hover/focus */
+.dph-info-trigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  isolation: isolate;
+}
+
+.dph-info-trigger:hover,
+.dph-info-trigger:focus-within {
+  z-index: 60;
+}
+
+/* Ikonka DPH – bez kruhu/obrysu, jen „i“, žádný ring */
+.dph-info-button {
+  line-height: 1;
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+.dph-info-button:hover,
+.dph-info-button:focus,
+.dph-info-button:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.dph-info-panel {
+  position: absolute;
+  top: calc(100% + 8px); /* pod ikonkou – plně viditelný, nepřekrývá nápis DPH */
+  bottom: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: 520px; /* šířka pro text na 2 řádcích */
+  max-width: min(520px, calc(100vw - 32px));
+  box-sizing: border-box;
+  border-radius: 16px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+  padding: 12px 14px;
+  font-size: 13px;
+  line-height: 16px;
+  color: #64748b;
+  text-transform: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease, visibility 0.15s ease;
+  pointer-events: none;
+  white-space: normal;
+  text-align: left;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.dph-info-trigger:hover .dph-info-panel,
+.dph-info-trigger:focus-within .dph-info-panel {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Popover s ceníkem při hoveru na info ikonu */
+.price-info-trigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  isolation: isolate; /* vlastní stacking context pro panel */
+}
+
+.price-info-trigger:hover,
+.price-info-trigger:focus-within {
+  z-index: 60;
+}
+
+/* Stejné chování jako u ikonky DPH: žádný obrys/ring po kliknutí nebo Tab, popover se zobrazí při hover i focus */
+.price-info-button {
+  line-height: 1;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.price-info-button:focus,
+.price-info-button:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.price-info-panel {
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 8px); /* zobrazit vedle ička (nalevo od něj) */
+  z-index: 1000;
+  width: 480px; /* dostatečná šířka pro ceny (včetně Kč), aby se neorezávaly */
+  min-width: 320px;
+  max-width: min(480px, calc(100vw - 24px));
+  box-sizing: border-box;
+  border-radius: 16px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+  padding: 12px 14px 10px;
+  overflow: hidden; /* čisté hranice panelu */
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-4px, -50%);
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
+  pointer-events: none;
+}
+
+.price-info-trigger:hover .price-info-panel,
+.price-info-trigger:focus-within .price-info-panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(0, -50%);
+  pointer-events: auto;
+}
+
+.price-info-title {
+  display: block;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  color: #1f2937;
+  text-align: left;
+  margin-bottom: 8px;
+}
+
+.price-info-header {
+  display: grid;
+  grid-template-columns: 52px minmax(90px, 1fr) 56px minmax(100px, 1fr); /* sloupce cen s min. šířkou, aby se Kč neorezávalo */
+  gap: 8px;
+  padding: 4px 0 6px;
+  border-bottom: 1px solid #e5e7eb;
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 16px;
+  text-align: left;
+}
+
+.price-info-header > span:nth-child(2),
+.price-info-header > span:nth-child(4),
+.price-info-row > span:nth-child(2),
+.price-info-row > span:nth-child(4) {
+  text-align: right;
+  white-space: nowrap; /* ceny a hlavičky cen vždy na jednom řádku */
+  min-width: 0;
+}
+
+.price-info-rows {
+  display: block; /* bez scrollu - vše musí být vidět */
+}
+
+.price-info-row {
+  display: grid;
+  grid-template-columns: 52px minmax(90px, 1fr) 56px minmax(100px, 1fr); /* stejná mřížka jako hlavička */
+  gap: 8px;
+  padding: 3px 0;
+  border-bottom: 1px solid #f1f5f9;
+  color: #1f2937;
+  font-size: 14px;
+  line-height: 24px;
+  text-align: left;
+}
+
+.price-info-header > span:nth-child(3),
+.price-info-row > span:nth-child(3) {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* sjednotit spacing ke sloupci Cena po slevě */
+}
+
+.price-info-row:last-child {
+  border-bottom: none;
+}
+
+.price-info-row > span:nth-child(1) {
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.price-info-row > span:nth-child(2) {
+  color: #64748b;
+}
+
+.price-info-row > span:nth-child(4) {
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.price-info-row--discounted > span:nth-child(1),
+.price-info-row--discounted > span:nth-child(4) {
+  font-weight: 700;
+}
+
+.price-info-discount-badge {
+  position: static !important; /* v tabulce nesmí být absolute */
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+  z-index: auto !important;
+  vertical-align: middle;
+  line-height: normal !important; /* nenasávat line-height řádku tabulky */
+}
+
+.price-info-no-discount {
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.price-info-footnote {
+  display: block;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #e5e7eb;
+  text-align: left;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.order-items-cart-footer-value {
+  font-size: 18px;
+  font-weight: 600; /* font-semibold */
+  color: #111827; /* text-gray-900 */
+  line-height: 1.4;
+  margin-bottom: 0;
+  margin-top: 8px; /* mt-2 */
+  white-space: nowrap;
+}
+
+/* Celkem k zaplacení - větší a výraznější */
+.order-items-cart-footer-block--total {
+  padding: 24px !important; /* py-6 px-6 (24px zleva i zprava) */
+  border-radius: 0;
+  background-color: rgba(27, 60, 152, 0.05); /* světlé modré pozadí s 5% opacity */
+  border: none;
+}
+
+.order-items-cart-footer-block--total .order-items-cart-footer-label {
+  color: #1B3C98; /* modrá barva z designu */
+}
+
+.order-items-cart-footer-value--total {
+  font-size: 24px;
+  font-weight: 700; /* font-bold */
+  color: #1B3C98; /* modrá barva z designu */
+}
+
+/* Specific padding for footer cells - spacing between boxes */
+.order-items-cart.table-order-items tfoot td.col-item,
+table.order-items-cart.table-order-items tfoot td.col-item {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  position: relative;
+}
+
+.order-items-cart.table-order-items tfoot td.col-validity,
+table.order-items-cart.table-order-items tfoot td.col-validity {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  position: relative;
+}
+
+/* Vertikální oddělovač mezi boxy - divide-x divide-gray-200 */
+.order-items-cart.table-order-items tfoot td.col-validity::before,
+table.order-items-cart.table-order-items tfoot td.col-validity::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: #E5E7EB; /* divide-gray-200 */
+}
+
+.order-items-cart.table-order-items tfoot td.col-unit-price,
+table.order-items-cart.table-order-items tfoot td.col-unit-price {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  position: relative;
+}
+
+/* Vertikální oddělovač před posledním boxem */
+.order-items-cart.table-order-items tfoot td.col-unit-price::before,
+table.order-items-cart.table-order-items tfoot td.col-unit-price::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: #E5E7EB; /* divide-gray-200 */
+}
+
+.order-items-cart.table-order-items tfoot td.col-budget,
+.order-items-cart.table-order-items tfoot td.col-actions,
+table.order-items-cart.table-order-items tfoot td.col-budget,
+table.order-items-cart.table-order-items tfoot td.col-actions {
+  padding: 0 !important;
+  border: none !important;
+}
+
+.order-items-cart.table-order-items tfoot tr,
+table.order-items-cart.table-order-items tfoot tr {
+  border: none !important;
+}
+
+/* Wrapper kolem footeru - border a rounded-2xl; overflow visible aby tooltip DPH nebyl ořezaný */
+.order-items-cart-footer-wrapper {
+  margin-top: 24px; /* stejná mezera jako pod bloky */
+  margin-left: 24px; /* odsazení zleva od vnitřku tabulky */
+  margin-right: 24px; /* odsazení zprava od vnitřku tabulky */
+  margin-bottom: 25px; /* přesná mezera pod boxy dle zadání */
+  overflow: visible;
+  border-radius: 16px; /* rounded-2xl */
+  border: 1px solid #E5E7EB; /* border-gray-200 */
+  background-color: #fff;
+  isolation: isolate; /* čistší vykreslení rohů */
+}
+
+/* Sekce pod tabulkou - odsazení */
+.order-billing-section,
+.order-options-section,
+.order-actions-section {
+  padding-left: 24px;
+  padding-right: 24px;
+  background-color: #f8f9fa !important; /* bez bílého pruhu pod CTA */
+}
+
+.order-actions-section {
+  padding-bottom: 64px !important; /* osmičková soustava: 8 × 8px */
+}
+
+/* Zarovnání tlačítek doprava a zdvojnásobené mezery */
+.order-actions-buttons {
+  width: 100% !important;
+  justify-content: flex-end !important;
+  margin-left: auto !important;
+  gap: 16px !important; /* zdvojnásobená mezera: 2 × 8px (gap-2 = 8px, gap-4 = 16px) */
+}
+
+/* Styling pro sekce – overflow hidden kvůli čistému vykreslení zaoblení */
+.order-billing-section .card,
+.order-options-section .card {
+  background-color: #fff;
+  border-radius: 16px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.order-billing-section .card-body,
+.order-options-section .card-body {
+  padding: 24px;
+}
+
+/* Wrapper formuláře v sekci Fakturační údaje - padding 24px zleva i zprava */
+#billing-content form {
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+}
+
+/* Fakturacni udaje: inputy maji mit max 40px vysku */
+#billing-content .form-control,
+#billing-content .form-select {
+  height: 40px !important;
+  min-height: 40px !important;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+/* Moznosti objednavky: inputy maji mit max 40px vysku */
+/* Spacing pod textem (Označení objednávky) = stejný jako nad ikonou a nadpisem (16px) */
+#options-content .form-label {
+  margin-bottom: 16px !important;
+}
+
+#options-content .form-control,
+#options-content .form-select {
+  height: 40px !important;
+  min-height: 40px !important;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+/* Form prvky dle design systému (sjednocení inputů + labelů) */
+.order-page-container .form-label,
+.save-offer-label {
+  display: block;
+  margin: 0 0 8px;
+  color: #111827;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.order-page-container .form-control,
+.order-page-container .form-select,
+.save-offer-input,
+.save-offer-textarea {
+  border-radius: 12px !important;
+  border: 1px solid #CBD5E1 !important;
+  background: #fff;
+  box-shadow: none !important;
+  color: #111827;
+  font-family: Inter, sans-serif;
+  font-size: 16px !important;
+  font-weight: 400;
+  line-height: 24px !important;
+  padding: 12px 16px !important;
+}
+
+.order-page-container .form-control,
+.order-page-container .form-select,
+.save-offer-input {
+  min-height: 48px;
+}
+
+.order-page-container .form-control::placeholder,
+.save-offer-input::placeholder,
+.save-offer-textarea::placeholder {
+  color: #94A3B8;
+  opacity: 1;
+}
+
+.order-page-container .form-control:focus,
+.order-page-container .form-select:focus,
+.save-offer-input:focus,
+.save-offer-textarea:focus {
+  border-color: #1B3C98 !important;
+  box-shadow: 0 0 0 3px rgba(27, 60, 152, 0.12) !important;
+}
+
+.order-page-container textarea.form-control,
+.save-offer-textarea {
+  min-height: 112px;
+}
+
+/* Tlačítka v sekci Možnosti objednávky – terciární (Darovat zdarma, S konečnou fakturou, Bez faktury) */
+#options-content .btn-outline-secondary {
+  display: inline-flex !important;
+  height: auto !important;
+  min-height: 40px !important;
+  padding: 8px 16px !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 8px !important;
+  border-radius: 32px !important;
+  border: 1px solid transparent !important;
+  background-color: transparent !important;
+  color: #C91617 !important;
+  font-family: Inter, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 20px !important;
+  box-shadow: none !important;
+  transition: color 0.15s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+/* Hover = vzhled jako „Odeslat cenovou nabídku“ (červený okraj, světlé pozadí, ring) */
+#options-content .btn-outline-secondary:hover {
+  background-color: rgba(201, 22, 23, 0.06) !important;
+  border-color: #C91617 !important;
+  color: #C91617 !important;
+  box-shadow: var(--btn-primary-ring) !important;
+}
+
+#options-content .btn-outline-secondary:active {
+  background-color: rgba(201, 22, 23, 0.12) !important;
+  border-color: #C91617 !important;
+  color: #C91617 !important;
+  box-shadow: var(--btn-primary-ring) !important;
+}
+
+/* Po kliknutí myší žádný „vybraný“ vzhled – zůstane jen červený text */
+#options-content .btn-outline-secondary:focus {
+  outline: none !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Ring jen při ovládání klávesnicí (Tab) */
+#options-content .btn-outline-secondary:focus-visible {
+  box-shadow: var(--btn-primary-ring) !important;
+}
+
+/* Tlačítka akcí - sekundární tlačítka (big button velikost) */
+.order-actions-section .order-action-btn-secondary {
+  display: inline-flex !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  padding: 8px 24px !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 8px !important;
+  border-radius: 32px !important;
+  border: 1px solid #C91617 !important;
+  background-color: transparent !important;
+  color: #C91617 !important;
+  font-family: Inter, sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  line-height: 130% !important;
+  transition: all 0.15s ease !important;
+}
+
+.order-actions-section .order-action-btn-secondary:hover {
+  background-color: rgba(201, 22, 23, 0.06) !important; /* secondary hover dle DS */
+  border-color: #C91617 !important;
+  color: #C91617 !important;
+  box-shadow: var(--btn-primary-ring) !important;
+}
+
+.order-actions-section .order-action-btn-secondary:active,
+.order-actions-section .order-action-btn-secondary:focus {
+  background-color: rgba(201, 22, 23, 0.12) !important; /* secondary active dle DS */
+  border-color: #C91617 !important;
+  color: #C91617 !important;
+  box-shadow: var(--btn-primary-ring) !important;
+}
+
+/* Disabled stav dle DS (node 336-403) */
+.order-actions-section .order-action-btn-secondary:disabled,
+.order-actions-section .order-action-btn-secondary[aria-disabled="true"] {
+  border-radius: 32px !important;
+  border: 1px solid #A9A9A9 !important;
+  background-color: #F8FAFC !important;
+  color: #A9A9A9 !important;
+  opacity: 1 !important; /* přebije bootstrap disabled opacity */
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+  pointer-events: none !important;
+}
+
+.order-actions-section .order-action-btn-secondary:disabled:hover,
+.order-actions-section .order-action-btn-secondary:disabled:active,
+.order-actions-section .order-action-btn-secondary:disabled:focus {
+  border-radius: 32px !important;
+  border: 1px solid #A9A9A9 !important;
+  background-color: #F8FAFC !important;
+  color: #A9A9A9 !important;
+  box-shadow: none !important;
+}
+
+.order-actions-section .order-action-btn-secondary:disabled svg,
+.order-actions-section .order-action-btn-secondary[aria-disabled="true"] svg {
+  color: #A9A9A9 !important;
+  fill: currentColor !important;
+}
+
+/* Tlačítka akcí - primární tlačítko (big button velikost, stejný styl jako "Přidat") */
+.order-actions-section .order-action-btn-primary {
+  display: inline-flex !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  padding: 8px 24px !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 8px !important;
+  border-radius: 32px !important;
+  background-color: var(--btn-primary) !important;
+  border: none !important;
+  color: #fff !important;
+  font-family: Inter, sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  line-height: 130% !important;
+  box-shadow: none !important;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+/* Primární tlačítko hover dle Figma DS (node 333-370): tmavší červená + ring */
+.order-actions-section .order-action-btn-primary:hover {
+  background-color: var(--btn-primary-hover) !important;
+  box-shadow: var(--btn-primary-ring) !important;
+  border: none !important;
+}
+
+/* Modal: Uložit variantu nabídky */
+.save-offer-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.save-offer-modal {
+  width: 100%;
+  max-width: 640px;
+  border-radius: 16px;
+  border: 1px solid #E5E7EB;
+  background: #fff;
+  box-shadow: 0 24px 48px rgba(2, 6, 23, 0.28);
+}
+
+.save-offer-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 24px 12px;
+}
+
+.save-offer-modal-title-wrap {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.save-offer-modal-title {
+  margin: 0;
+  color: #111827;
+  font-family: "Open Sans", sans-serif;
+  font-size: 28px; /* DS: heading-h2 */
+  font-weight: 600;
+  line-height: 130%;
+}
+
+.save-offer-modal-subtitle {
+  margin: 8px 0 0;
+  color: #64748B;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.save-offer-modal-close {
+  border: none;
+  background: transparent;
+  color: #6B7280;
+  font-size: 24px;
+  line-height: 1;
+  padding: 0;
+  cursor: pointer;
+}
+
+.save-offer-modal-body {
+  padding: 12px 24px 8px;
+}
+
+.save-offer-optional {
+  color: #64748B;
+  font-weight: 400;
+}
+
+.save-offer-input,
+.save-offer-textarea {
+  margin-bottom: 24px;
+}
+
+.save-offer-input {
+  height: 48px;
+  margin-bottom: 24px;
+}
+
+.save-offer-textarea {
+  resize: none;
+  margin-bottom: 0;
+}
+
+.save-offer-note-counter {
+  margin-top: 8px;
+  text-align: right;
+  color: #64748B;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.save-offer-saved-count {
+  margin-top: 12px;
+  color: #64748B;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.save-offer-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px 24px;
+}
+
+.save-offer-btn-cancel {
+  height: 48px;
+  min-height: 48px;
+  padding: 8px 24px;
+  border-radius: 32px;
+  border: 1px solid #C91617;
+  background: transparent;
+  color: #C91617;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.save-offer-btn-primary {
+  height: 48px;
+  min-height: 48px;
+  padding: 8px 24px;
+  border-radius: 32px;
+  border: none;
+  background: var(--btn-primary);
+  color: #fff !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  box-shadow: none;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+.save-offer-btn-primary:disabled {
+  border: none;
+  background: #E5E7EB;
+  color: #9CA3AF !important;
+}
+
+.save-offer-btn-primary:hover:not(:disabled) {
+  background-color: var(--btn-primary-hover) !important;
+  color: #fff !important;
+  box-shadow: var(--btn-primary-ring) !important;
+}
+
+/* Sekundární tlačítka v modalech – stejný hover/active/focus jako primární (ring z DS) */
+.save-offer-btn-cancel:hover,
+.send-offer-btn-cancel:hover,
+.delete-variant-modal-cancel:hover {
+  background-color: rgba(201, 22, 23, 0.06);
+  border-color: #C91617;
+  color: #C91617;
+  box-shadow: var(--btn-primary-ring);
+}
+
+.save-offer-btn-cancel:active,
+.save-offer-btn-cancel:focus,
+.send-offer-btn-cancel:active,
+.send-offer-btn-cancel:focus,
+.delete-variant-modal-cancel:active,
+.delete-variant-modal-cancel:focus {
+  background-color: rgba(201, 22, 23, 0.12);
+  border-color: #C91617;
+  color: #C91617;
+  box-shadow: var(--btn-primary-ring);
+}
+
+/* Modal: Odeslat cenovou nabidku (stejne barvy/pattern jako existujici modaly) */
+.send-offer-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1240;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.send-offer-modal {
+  width: 100%;
+  max-width: 640px;
+  border-radius: 16px;
+  border: 1px solid #E5E7EB;
+  background: #fff;
+  box-shadow: 0 24px 48px rgba(2, 6, 23, 0.28);
+}
+
+.send-offer-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 24px 12px;
+}
+
+.send-offer-modal-title {
+  margin: 0;
+  color: #111827;
+  font-family: "Open Sans", sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 130%;
+}
+
+.send-offer-modal-subtitle {
+  margin: 8px 0 0;
+  color: #64748B;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.send-offer-modal-close {
+  border: none;
+  background: transparent;
+  color: #6B7280;
+  font-size: 24px;
+  line-height: 1;
+  padding: 0;
+  cursor: pointer;
+}
+
+.send-offer-modal-body {
+  padding: 12px 24px 8px;
+}
+
+.send-offer-label,
+.send-offer-variants-label {
+  display: block;
+  margin: 0 0 8px;
+  color: #111827;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.send-offer-input {
+  margin-bottom: 16px;
+}
+
+.send-offer-variants-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.send-offer-variant-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 16px;
+  cursor: pointer;
+  background: #fff;
+}
+
+.send-offer-variant-item--selected {
+  border-color: #1B3C98;
+  background: #EEF0F7;
+}
+
+.send-offer-variant-checkbox {
+  margin-top: 0;
+  flex-shrink: 0;
+}
+
+.send-offer-variant-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Stejná typografie jako v sekci Uložené varianty nabídky (.saved-offer-name) */
+.send-offer-variant-name {
+  color: #0f1729;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 130%;
+}
+
+/* Stejná typografie jako .saved-offer-items v sekci Uložené varianty nabídky */
+.send-offer-variant-meta {
+  margin-top: 0;
+  color: #64748b;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.send-offer-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px 24px;
+}
+
+.send-offer-btn-cancel {
+  height: 48px;
+  min-height: 48px;
+  padding: 8px 24px;
+  border-radius: 32px;
+  border: 1px solid #C91617;
+  background: transparent;
+  color: #C91617;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.send-offer-btn-primary {
+  height: 48px;
+  min-height: 48px;
+  padding: 8px 24px;
+  border-radius: 32px;
+  border: none;
+  background: var(--btn-primary);
+  color: #fff !important;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  box-shadow: none;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+.send-offer-btn-primary:hover:not(:disabled) {
+  background-color: var(--btn-primary-hover) !important;
+  color: #fff !important;
+  box-shadow: var(--btn-primary-ring) !important;
+}
+
+/* Primární tlačítko disabled dle Figma DS (node 335-378) – šedý stav */
+.send-offer-btn-primary:disabled {
+  border: none;
+  background: #E5E7EB;
+  color: #9CA3AF !important;
+}
+
+/* Modal: potvrzeni smazani varianty */
+.delete-variant-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1250;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.delete-variant-modal {
+  width: 100%;
+  max-width: 560px;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  box-shadow: 0 24px 48px rgba(2, 6, 23, 0.28);
+  padding: 24px;
+}
+
+.delete-variant-modal-title {
+  margin: 0;
+  color: #0f1729;
+  font-family: "Open Sans", sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 130%;
+}
+
+.delete-variant-modal-text {
+  margin: 16px 0 0;
+  color: #64748b;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.delete-variant-modal-actions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* Sekundární tlačítko – stejný základ jako v ostatních modalech (červený outline dle DS) */
+.delete-variant-modal-cancel {
+  min-height: 48px;
+  padding: 8px 24px;
+  border-radius: 32px;
+  border: 1px solid #C91617;
+  background-color: transparent;
+  color: #C91617;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Primární tlačítko v modalu smazání – dle design systému (Figma DS node 333-370) */
+.delete-variant-modal-confirm {
+  min-height: 48px;
+  height: 48px;
+  padding: 8px 24px;
+  border-radius: 32px;
+  border: none;
+  background-color: var(--btn-primary);
+  color: #fff !important;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 130%;
+  box-shadow: none;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+.delete-variant-modal-confirm:hover {
+  background-color: var(--btn-primary-hover) !important;
+  color: #fff !important;
+  box-shadow: var(--btn-primary-ring) !important;
+}
+
+/* Ulozene varianty nabidky pod kosikem */
+.saved-offers-section {
+  padding-left: 0;
+  padding-right: 0;
+  margin-top: 25px; /* mezera pod boxy součtů košíku */
+}
+
+.saved-offers-header {
+  margin-bottom: 8px;
+}
+
+.saved-offers-title-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.saved-offers-title-wrap svg {
+  color: #65758B;
+}
+
+.saved-offers-title,
+.saved-offers-count {
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px;
+  color: #65758B;
+}
+
+.saved-offers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.saved-offer-card {
+  border: none;
+  border-radius: 16px;
+  background: #fff;
+  overflow: visible;
+}
+
+.saved-offer-accordion-header {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 16px;
+  cursor: pointer;
+}
+
+.saved-offer-card-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+}
+
+.saved-offer-index-badge {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  align-items: center;
+  justify-content: center;
+  background: rgba(27, 60, 152, 0.1);
+  color: #1b3c98;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  flex-shrink: 0;
+}
+
+.saved-offer-meta {
+  min-width: 0;
+}
+
+.saved-offer-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Rezervovaný slot pro badge – pevná min. šířka, aby při zobrazení/skrytí „Přidáno do objednávky“ nic neskákalo */
+.saved-offer-badges-slot {
+  min-width: 180px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.saved-offer-name {
+  margin: 0;
+  color: #0f1729;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 130%;
+}
+
+.saved-offer-sent-badge {
+  width: auto;
+  min-width: 0;
+  padding: 0 8px;
+  text-transform: none;
+  letter-spacing: 0;
+  background: rgba(100, 116, 139, 0.2);
+  color: #64748b;
+  border: none;
+  white-space: nowrap;
+}
+.saved-offer-added-badge {
+  width: auto;
+  min-width: 0;
+  padding: 0 8px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.saved-offer-items {
+  margin-top: 0;
+  color: #64748b;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.saved-offer-price {
+  margin-top: 8px;
+  color: #0f1729;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 130%;
+}
+
+.saved-offer-price span {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 130%;
+  color: #64748b;
+}
+
+.saved-offer-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Přidat do objednávky – malý button (hover dle Figma DS node 333-370) */
+.saved-offer-apply-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  min-height: 40px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 32px;
+  background: var(--btn-primary);
+  color: #fff;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 130%;
+  gap: 6px;
+  white-space: nowrap;
+  box-sizing: border-box;
+  box-shadow: none;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.saved-offer-apply-btn i {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.saved-offer-apply-btn:hover {
+  background: var(--btn-primary-hover) !important;
+  color: #fff !important;
+  box-shadow: var(--btn-primary-ring) !important;
+}
+
+.saved-offer-apply-btn:active {
+  background: var(--btn-primary-hover);
+  color: #fff;
+  box-shadow: var(--btn-primary-ring);
+}
+
+.saved-offer-apply-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(201, 22, 23, 0.24);
+}
+
+.saved-offer-apply-btn:disabled {
+  background: #E5E7EB;
+  color: #9CA3AF;
+  cursor: not-allowed;
+  filter: none;
+}
+
+.saved-offer-icon-btn {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border: none;
+  border-radius: 9999px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  background: transparent;
+}
+
+.saved-offer-icon-btn:hover {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.saved-offer-icon-btn .text-secondary {
+  color: currentColor !important;
+}
+
+.saved-offer-menu-wrapper {
+  position: relative;
+}
+
+.saved-offer-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 232px;
+  padding: 8px;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  box-shadow: 0 8px 16px rgba(15, 23, 42, 0.12);
+  z-index: 50;
+}
+
+.saved-offer-dropdown-item {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.saved-offer-dropdown-item--danger {
+  color: #C91617;
+}
+
+.saved-offer-dropdown-item:hover {
+  background: rgba(201, 22, 23, 0.06);
+}
+
+.saved-offer-accordion-content {
+  border-top: 1px solid #e2e8f0;
+  background: #fff;
+}
+
+.saved-offer-variant-items-title {
+  padding: 16px;
+  border-bottom: 1px solid #e2e8f0;
+  color: #65758B;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.saved-offer-items-list {
+  padding: 0;
+}
+
+.saved-offer-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 24px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.saved-offer-item-main {
+  min-width: 0;
+}
+
+.saved-offer-item-name {
+  color: #334155;
+}
+
+.saved-offer-item-unit-price {
+  margin-top: 8px;
+  color: #94a3b8;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.saved-offer-item-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.saved-offer-item-controls .stepper {
+  height: 48px;
+  min-height: 48px;
+}
+
+.saved-offer-item-controls .stepper-btn,
+.saved-offer-item-controls .stepper-input {
+  height: 48px;
+  min-height: 48px;
+}
+
+.saved-offer-discount-select {
+  min-width: 96px;
+  max-width: 120px;
+  min-height: 48px !important;
+  height: 48px;
+  padding: 12px 32px 12px 16px !important;
+  border-radius: 12px !important;
+  border-color: #cbd5e1 !important;
+  font-size: 16px !important;
+  line-height: 24px !important;
+  color: #334155;
+  font-weight: 500;
+}
+
+.saved-offer-item-total {
+  min-width: 120px;
+  text-align: right;
+  color: #1f2937;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 130%;
+  font-variant-numeric: tabular-nums;
+  padding-right: 0;
+}
+
+.saved-offer-empty {
+  padding: 24px 0;
+  color: #94a3b8;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.saved-offer-total-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 16px 24px;
+}
+
+.saved-offer-total-row span {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #9CA3AF;
+  line-height: 1.4;
+  margin-bottom: 0;
+  margin-top: 0;
+  white-space: nowrap;
+}
+
+.saved-offer-total-row strong {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  line-height: 1.4;
+  margin-bottom: 0;
+  margin-top: 8px;
+  white-space: nowrap;
+}
