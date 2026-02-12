@@ -62,5 +62,5 @@ export default function FormField({
 }
 
 function cloneElementWithId(child: React.ReactElement, id: string): React.ReactNode {
-  return React.cloneElement(child, { id })
+  return React.cloneElement(child, { id } as React.Attributes & { id: string })
 }

@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react'
+import { useState, type ReactNode, type ReactElement } from 'react'
 import { FileText, Briefcase, Puzzle } from 'lucide-react'
 import { pluralPoložka } from './utils/czechPlural'
 
@@ -7,7 +7,7 @@ const iconDocument = <FileText {...categoryIconProps} aria-hidden />
 const iconBriefcase = <Briefcase {...categoryIconProps} aria-hidden />
 const iconPuzzle = <Puzzle {...categoryIconProps} aria-hidden />
 
-const ICONS: Record<string, JSX.Element> = {
+const ICONS: Record<string, ReactElement> = {
   document: iconDocument,
   briefcase: iconBriefcase,
   puzzle: iconPuzzle,

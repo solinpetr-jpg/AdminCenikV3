@@ -6,7 +6,7 @@ import { useRole } from './contexts/RoleContext'
 const SERVICE_ID_PREFIX = 'dalsi-'
 
 /** ID položek skrytých v roli Obchodník: Služba na objednávku, Balíček kreditů na Facebook/Instagram */
-const HIDDEN_FOR_SALES_IDS = [1, 2] as const
+const HIDDEN_FOR_SALES_IDS: readonly number[] = [1, 2]
 
 function DalsiProduktRow({
   item,
@@ -163,7 +163,7 @@ export default function DalsiProduktySectionContent() {
   const visibleServices = useMemo(
     () =>
       role === 'sales'
-        ? dalsiProduktyServices.filter((s) => !HIDDEN_FOR_SALES_IDS.includes(s.id as 1 | 2))
+        ? dalsiProduktyServices.filter((s) => !HIDDEN_FOR_SALES_IDS.includes(s.id))
         : dalsiProduktyServices,
     [role]
   )

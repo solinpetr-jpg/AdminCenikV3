@@ -1,7 +1,7 @@
 import { useEffect, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '../utils/cn'
-import { Button } from '../atoms/Button'
+import Button from '../atoms/Button'
 import './Modal.css'
 
 export interface ModalProps {

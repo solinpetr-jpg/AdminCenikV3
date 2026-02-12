@@ -24,7 +24,10 @@ export default function EditableCell({
   /* Read-only: Obchodník nebo když isEditable není explicitně true */
   if (isEditable !== true) {
     return (
-      <span className={valueClassName} style={{ fontSize: '14px', ...alignStyle }}>
+      <span
+        className={[valueClassName, className].filter(Boolean).join(' ') || undefined}
+        style={{ fontSize: '14px', ...alignStyle }}
+      >
         {value}
       </span>
     )
@@ -34,7 +37,7 @@ export default function EditableCell({
   return (
     <button
       type="button"
-      className={`editable-cell-link ${valueClassName ?? ''}`.trim()}
+      className={['editable-cell-link', valueClassName, className].filter(Boolean).join(' ').trim() || undefined}
       style={{ ...alignStyle, cursor: 'pointer' }}
       onClick={onEdit}
       aria-label="Upravit hodnotu"

@@ -451,12 +451,14 @@ export default function OrderItemsCart({ onRequestClearCart }: OrderItemsCartPro
                   : ''
               }
               onConfirm={(newValue) => {
-                if (!editModal.serviceId || !editModal.field) return
+                const serviceId = editModal.serviceId
+                const field = editModal.field
+                if (serviceId == null || field == null) return
                 setRowEdits((prev) => ({
                   ...prev,
-                  [editModal.serviceId]: {
-                    ...prev[editModal.serviceId],
-                    [editModal.field!]: newValue,
+                  [serviceId]: {
+                    ...prev[serviceId],
+                    [field]: newValue,
                   },
                 }))
                 setEditModal({ serviceId: null, field: null })
