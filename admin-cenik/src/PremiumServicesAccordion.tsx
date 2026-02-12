@@ -108,7 +108,7 @@ function PremiumServiceRow({ service, quantity, setQuantity }: PremiumServiceRow
         transition: 'background-color 0.2s ease',
       }}
     >
-      <div className="premium-service-row premium-service-row--grid py-3 px-3">
+      <div className="premium-service-row premium-service-row--grid px-3">
         <div className="premium-service-row-title">
           <div className="d-flex align-items-center gap-2">
             <span className="premium-service-title">{service.title}</span>

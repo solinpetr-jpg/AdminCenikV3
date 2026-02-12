@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import OrderPage from './OrderPage'
+import AppLayout from './AppLayout'
 import { CartProvider } from './contexts/CartContext'
+import { RoleProvider } from './contexts/RoleContext'
 import DocLayout from './design-system/docs/DocLayout'
 import DocHome from './design-system/docs/pages/DocHome'
 import FoundationsPage from './design-system/docs/pages/FoundationsPage'
@@ -21,17 +23,20 @@ import PricingLayoutExample from './design-system/docs/pages/PricingLayoutExampl
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <CartProvider>
-              <OrderPage />
-            </CartProvider>
-          }
-        />
-        <Route path="/design-system" element={<DocLayout />}>
+    <RoleProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <AppLayout>
+                <CartProvider>
+                  <OrderPage />
+                </CartProvider>
+              </AppLayout>
+            }
+          />
+          <Route path="/design-system" element={<AppLayout><DocLayout /></AppLayout>}>
           <Route index element={<DocHome />} />
           <Route path="foundations" element={<FoundationsPage />} />
           <Route path="atoms/button" element={<ButtonDoc />} />
@@ -48,8 +53,9 @@ export default function App() {
           <Route path="organisms/pricing-card" element={<PricingCardDoc />} />
           <Route path="organisms/pricing-hint-table" element={<PricingHintTableDoc />} />
           <Route path="examples/pricing-layout" element={<PricingLayoutExample />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </RoleProvider>
   )
 }

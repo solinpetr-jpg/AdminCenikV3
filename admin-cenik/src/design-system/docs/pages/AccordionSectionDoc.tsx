@@ -54,6 +54,13 @@ export default function AccordionSectionDoc() {
       </section>
 
       <section>
+        <Heading level={2}>Varianta: jednoduchý list (Další produkty)</Heading>
+        <Text as="p" variant="body" muted style={{ marginTop: 8 }}>
+          Na stránce objednávky se v sekci „Další produkty“ používá zjednodušený list: každý řádek má název vlevo, cenu + „bez DPH“ vpravo a modré tlačítko „+ Přidat“. Data jsou v <code>data/dalsiProduktyServices.ts</code>, komponenta <code>DalsiProduktySectionContent</code>. Rozložení 1:1 podle návrhu (dividers mezi řádky, rounded container).
+        </Text>
+      </section>
+
+      <section>
         <Heading level={2}>Props</Heading>
         <div className="ds-doc-props">
           <table>

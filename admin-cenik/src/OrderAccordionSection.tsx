@@ -41,6 +41,8 @@ interface OrderAccordionSectionProps {
   title: string
   iconType?: 'document' | 'briefcase' | 'puzzle'
   itemCount: number
+  /** Počet vybraných položek v sekci (např. z košíku). Pokud je uveden, v headeru se zobrazí „X položek • Y vybráno“. */
+  selectedCount?: number
   defaultExpanded?: boolean
   children: ReactNode
 }
@@ -50,6 +52,7 @@ export default function OrderAccordionSection({
   title,
   iconType = 'document',
   itemCount,
+  selectedCount,
   defaultExpanded = false,
   children,
 }: OrderAccordionSectionProps) {
@@ -82,6 +85,7 @@ export default function OrderAccordionSection({
         <div className="d-flex align-items-center gap-2">
           <span className="premium-section-summary">
             {itemCount} {pluralPoložka(itemCount)}
+            {selectedCount !== undefined && ` • ${selectedCount} vybráno`}
           </span>
           <Chevron expanded={expanded} />
         </div>

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Heading, Text, Stack, Button, PricingHintTable } from '../../index'
+import { Heading, Text, Stack, Button, PricingHintTable, PricingHintTableContent, CardSurface } from '../../index'
 import './DocPage.css'
 
 export default function PricingHintTableDoc() {
@@ -8,25 +8,35 @@ export default function PricingHintTableDoc() {
   return (
     <Stack gap={6}>
       <div>
-        <Heading level={1}>Hint Pricing Table</Heading>
+        <Heading level={1}>Pricing Hint Table</Heading>
         <Text as="p" variant="body" muted style={{ marginTop: 8 }}>
-          Modal s tabulkou: Počet, Cena před slevou, Sleva, Cena po slevě. Dynamické badge -10 %, -15 %, -20 %. Klik mimo nebo ESC zavře. Focus trap uvnitř modalu.
+          Tabulka slev: Počet, Cena před slevou, Sleva, Cena po slevě. Badge -10 %, -15 %, -20 %. Používá se uvnitř Tooltipu (info ikona u ceny) nebo jako modal.
         </Text>
       </div>
 
       <section>
-        <Heading level={2}>Behavior</Heading>
-        <ul style={{ marginTop: 8, paddingLeft: 24 }}>
-          <li>Otevření: typicky z info ikony u ceny na Pricing Card.</li>
-          <li>Zavření: klik na backdrop, ESC, tlačítko Zavřít.</li>
-          <li>Focus zůstane v modalu (Tab prochází pouze prvky uvnitř).</li>
-        </ul>
+        <Heading level={2}>Obsah tabulky (bez modalu)</Heading>
+        <Text as="p" variant="bodySm" muted style={{ marginTop: 8 }}>
+          Stejný obsah jako v Tooltipu / modalu – komponenta PricingHintTableContent.
+        </Text>
+        <CardSurface style={{ marginTop: 16, maxWidth: 440, overflow: 'hidden' }}>
+          <PricingHintTableContent
+            title="Inzerát práce 30 + SuperBoost"
+            unitPrice={5990}
+            hasQuantityOptions
+            maxQuantity={20}
+          />
+        </CardSurface>
       </section>
 
       <section>
-        <Heading level={2}>Ukázka samostatně</Heading>
+        <Heading level={2}>Jako modal</Heading>
+        <ul style={{ marginTop: 8, paddingLeft: 24 }}>
+          <li>Zavření: klik na backdrop, ESC, tlačítko Zavřít.</li>
+          <li>Focus trap uvnitř modalu.</li>
+        </ul>
         <Button variant="primary" onClick={() => setOpen(true)} style={{ marginTop: 16 }}>
-          Otevřít tabulku slev
+          Otevřít tabulku slev (modal)
         </Button>
         <PricingHintTable
           open={open}

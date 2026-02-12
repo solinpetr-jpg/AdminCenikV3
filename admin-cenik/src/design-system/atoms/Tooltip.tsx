@@ -15,6 +15,8 @@ export interface TooltipProps {
   trigger: ReactNode
   children: ReactNode
   title?: string
+  /** Accessible label for the trigger (e.g. "Informace o ceně") */
+  'aria-label'?: string
   /** Optional id for the panel (for aria-describedby) */
   id?: string
   position?: 'top' | 'bottom' | 'left' | 'right'
@@ -26,6 +28,7 @@ export default function Tooltip({
   trigger,
   children,
   title,
+  'aria-label': ariaLabel,
   id: idProp,
   position = 'bottom',
   className,
@@ -125,6 +128,7 @@ export default function Tooltip({
         tabIndex={0}
         aria-expanded={open}
         aria-haspopup="dialog"
+        aria-label={ariaLabel}
         aria-describedby={open ? panelId : undefined}
         title={title}
         onClick={toggleClick}

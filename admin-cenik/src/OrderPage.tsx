@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { Link } from 'react-router-dom'
 import { Crown, FileText, Receipt, ShoppingCart, Gift, FileCheck, FileX, Save } from 'lucide-react'
 import TopPackagesSection from './TopPackagesSection'
 import PremiumServicesAccordion from './PremiumServicesAccordion'
 import OrderAccordionSection from './OrderAccordionSection'
 import BasicAdsSectionContent from './BasicAdsSectionContent'
+import BrigadySectionContent from './BrigadySectionContent'
+import DalsiProduktySectionContent from './DalsiProduktySectionContent'
 import OrderItemsCart from './OrderItemsCart'
 import { useCart } from './contexts/CartContext'
+import { useRole } from './contexts/RoleContext'
 import { formatPriceCZK } from './utils/pricing'
 import { pluralPoložka } from './utils/czechPlural'
 import type { SavedVariant, SavedVariantItem, UiToast } from './types'
@@ -38,6 +40,7 @@ function Chevron({ expanded }: { expanded: boolean }) {
 }
 
 export default function OrderPage() {
+  const { role } = useRole()
   const { cartItems, addOrUpdateItem, clearCart } = useCart()
   const [billingExpanded, setBillingExpanded] = useState(false)
   const [isSaveOfferModalOpen, setIsSaveOfferModalOpen] = useState(false)
@@ -57,6 +60,9 @@ export default function OrderPage() {
   const variantMenuRef = useRef<HTMLDivElement>(null)
 
   const hasOrderItems = cartItems.some((item) => item.quantity > 0)
+  const dalsiProduktySelectedCount = cartItems
+    .filter((item) => item.serviceId.startsWith('dalsi-'))
+    .reduce((sum, item) => sum + item.quantity, 0)
   const activeCartItems = cartItems.filter((item) => item.quantity > 0)
   const cartItemCount = activeCartItems.reduce((sum, item) => sum + item.quantity, 0)
   const cartItemsNames = activeCartItems.map((item) => item.name)
@@ -85,6 +91,22 @@ export default function OrderPage() {
   const canSendOffer = isClientEmailValid && selectedVariantIds.length > 0
 
   const [isOrderItemsReached, setIsOrderItemsReached] = useState(false)
+
+  useEffect(() => {
+    const target = document.getElementById('order-items-heading')
+    if (!target) return undefined
+    const check = () => {
+      const rect = target.getBoundingClientRect()
+      setIsOrderItemsReached(rect.top <= window.innerHeight)
+    }
+    check()
+    window.addEventListener('scroll', check, { passive: true })
+    window.addEventListener('resize', check)
+    return () => {
+      window.removeEventListener('scroll', check)
+      window.removeEventListener('resize', check)
+    }
+  }, [])
 
   useEffect(() => {
     setSavedVariants((prev) => {
@@ -122,22 +144,6 @@ export default function OrderPage() {
       document.removeEventListener('keydown', handleEscape)
     }
   }, [openVariantMenuId])
-
-  useEffect(() => {
-    const target = document.getElementById('order-items-heading')
-    if (!target) return undefined
-    const check = () => {
-      const rect = target.getBoundingClientRect()
-      setIsOrderItemsReached(rect.top <= window.innerHeight)
-    }
-    check()
-    window.addEventListener('scroll', check, { passive: true })
-    window.addEventListener('resize', check)
-    return () => {
-      window.removeEventListener('scroll', check)
-      window.removeEventListener('resize', check)
-    }
-  }, [])
 
   const openSaveOfferModal = () => {
     if (!hasOrderItems) return
@@ -353,16 +359,11 @@ export default function OrderPage() {
   return (
     <main className="min-vh-100 bg-light">
       <div className="container order-page-container pt-4 pt-md-5">
-        <div className="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-2">
-          <div>
-            <h1 className="order-page-title mb-2">Objednávka služeb</h1>
-            <p className="order-page-subtitle mb-4 mb-md-5">
-              Vyberte si z našich balíčků a služeb pro efektivní nábor zaměstnanců
-            </p>
-          </div>
-          <Link to="/design-system" className="btn btn-link text-decoration-none p-0">
-            Design systém
-          </Link>
+        <div className="mb-2">
+          <h1 className="order-page-title mb-2">Objednávka služeb</h1>
+          <p className="order-page-subtitle mb-4 mb-md-5">
+            Vyberte si z našich balíčků a služeb pro efektivní nábor zaměstnanců
+          </p>
         </div>
 
         <section id="top-packages">
@@ -405,9 +406,7 @@ export default function OrderPage() {
             iconType="briefcase"
             itemCount={8}
           >
-            <div className="py-3 px-3 premium-service-row">
-              <span className="premium-service-title text-muted">Obsah sekce bude doplněn</span>
-            </div>
+            <BrigadySectionContent />
           </OrderAccordionSection>
         </section>
 
@@ -417,10 +416,9 @@ export default function OrderPage() {
             title="Další produkty"
             iconType="puzzle"
             itemCount={7}
+            selectedCount={dalsiProduktySelectedCount}
           >
-            <div className="py-3 px-3 premium-service-row">
-              <span className="premium-service-title text-muted">Obsah sekce bude doplněn</span>
-            </div>
+            <DalsiProduktySectionContent />
           </OrderAccordionSection>
         </section>
 
@@ -866,8 +864,10 @@ export default function OrderPage() {
                     className="btn order-items-bottom-bar-button"
                     onClick={() => {
                       const headingEl = document.getElementById('order-items-heading')
-                      if (headingEl)
+                      if (headingEl) {
                         headingEl.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                        setIsOrderItemsReached(true)
+                      }
                     }}
                   >
                     Zobrazit detail
@@ -936,14 +936,16 @@ export default function OrderPage() {
                           className="form-control"
                           placeholder="Např. Kampaň Q1 2025"
                         />
-                        <button
-                          type="button"
-                          className="btn btn-link p-0"
-                          title="Uložit"
-                          aria-label="Uložit"
-                        >
-                          <Save size={20} color="#dc3545" aria-hidden />
-                        </button>
+                        {role === 'admin' && (
+                          <button
+                            type="button"
+                            className="btn btn-link p-0"
+                            title="Uložit"
+                            aria-label="Uložit"
+                          >
+                            <Save size={20} color="#dc3545" aria-hidden />
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>

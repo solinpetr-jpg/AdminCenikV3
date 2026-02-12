@@ -23,7 +23,7 @@ export { default as Accordion } from './organisms/Accordion'
 export { default as Modal } from './organisms/Modal'
 export { default as SectionCard } from './organisms/SectionCard'
 export { default as PricingCard } from './organisms/PricingCard'
-export { default as PricingHintTable } from './organisms/PricingHintTable'
+export { default as PricingHintTable, PricingHintTableContent } from './organisms/PricingHintTable'
 export { default as AccordionSection } from './organisms/AccordionSection'
 export { default as BottomSummaryBar } from './organisms/BottomSummaryBar'
 

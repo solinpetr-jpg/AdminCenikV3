@@ -8,7 +8,8 @@ import QuantityChips from '../molecules/QuantityChips'
 import Price from '../molecules/Price'
 import Button from '../atoms/Button'
 import Stepper from '../atoms/Stepper'
-import PricingHintTable from './PricingHintTable'
+import Tooltip from '../atoms/Tooltip'
+import { PricingHintTableContent } from './PricingHintTable'
 import { formatPriceCZK, getDiscountForQuantity } from '../utils/pricing'
 import type { QuantityOption } from '../molecules/QuantityChips'
 import { cn } from '../utils/cn'
@@ -53,7 +54,6 @@ export default function PricingCard({
   className,
 }: PricingCardProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
-  const [hintOpen, setHintOpen] = useState(false)
 
   const hasOptions = quantityOptions.length > 0
   const showStepper = quantity > 0
@@ -168,15 +168,19 @@ export default function PricingCard({
               )}
               <div className="ds-pricing-card-price-row">
                 <Price value={formatPriceCZK(displayPrice)} size="lg" />
-                <button
-                  type="button"
-                  className="ds-pricing-card-info-btn"
-                  onClick={() => setHintOpen(true)}
-                  aria-label={`Informace o ceně: ${title}`}
+                <Tooltip
+                  trigger={<Info size={16} strokeWidth={2} aria-hidden />}
                   title="Informace o ceně"
+                  aria-label={`Informace o ceně: ${title}`}
+                  triggerClassName="ds-pricing-card-info-btn"
                 >
-                  <Info size={16} strokeWidth={2} aria-hidden />
-                </button>
+                  <PricingHintTableContent
+                    title={title}
+                    unitPrice={unitPrice}
+                    hasQuantityOptions={hasOptions}
+                    maxQuantity={20}
+                  />
+                </Tooltip>
               </div>
               <Text variant="bodySm" muted className="ds-pricing-card-vat-note">
                 {vatNote}
@@ -185,15 +189,6 @@ export default function PricingCard({
           </div>
         </div>
       </CardSurface>
-
-      <PricingHintTable
-        open={hintOpen}
-        onClose={() => setHintOpen(false)}
-        title={title}
-        unitPrice={unitPrice}
-        hasQuantityOptions={hasOptions}
-        maxQuantity={20}
-      />
     </>
   )
 }

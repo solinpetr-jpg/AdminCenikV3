@@ -1,8 +1,21 @@
-import { useId } from 'react'
+import { useId, useState, useCallback } from 'react'
 import { useCart } from './contexts/CartContext'
+import { useRole } from './contexts/RoleContext'
 import { formatPriceCZK } from './utils/pricing'
 import { Package, ShoppingCart, CircleX, Info } from 'lucide-react'
 import { motion } from 'framer-motion'
+import EditableCell from './EditableCell'
+import ValueEditModal from './ValueEditModal'
+
+type EditableField = 'itemName' | 'validity' | 'unitPrice' | 'totalWithoutVat' | 'budget'
+
+interface RowEdits {
+  itemName?: string
+  validity?: string
+  unitPrice?: string
+  totalWithoutVat?: string
+  budget?: string
+}
 
 const DPH_INFO_TEXT =
   'DPH se počítá podle sazby platné v zemi zákazníka (v ČR 21%) a celková částka se průběžně přepočítává podle vybraných položek.'
@@ -54,7 +67,46 @@ interface OrderItemsCartProps {
 
 export default function OrderItemsCart({ onRequestClearCart }: OrderItemsCartProps) {
   const dphPanelId = useId()
+  const { role } = useRole()
   const { cartItems, updateItemQuantity, updateItemDiscount, removeItem } = useCart()
+  /** Admin = editovatelné buňky + sloupec Sleva. Žádná výjimka pro typ položky ani cenu 0 Kč. */
+  const isAdmin = role === 'admin'
+  const showDiscountColumn = isAdmin
+
+  const [rowEdits, setRowEdits] = useState<Record<string, RowEdits>>({})
+  const [editModal, setEditModal] = useState<{
+    serviceId: string | null
+    field: EditableField | null
+  }>({ serviceId: null, field: null })
+
+  /** Jedna logika pro všechny řádky – včetně „Služba na objednávku“ (cena 0 Kč). Žádný guard na nulovou cenu ani na typ položky. */
+  const getDisplayValue = useCallback(
+    (
+      serviceId: string,
+      field: EditableField,
+      item: { name: string; unitPriceWithoutVat: number; quantity: number; discountPercent: number },
+      totalWithoutVat: number
+    ): string => {
+      const edits = rowEdits[serviceId]
+      const unitPrice = Number(item.unitPriceWithoutVat) || 0
+      const total = Number(totalWithoutVat) || 0
+      switch (field) {
+        case 'itemName':
+          return edits?.itemName ?? item.name
+        case 'validity':
+          return edits?.validity ?? VALIDITY_DAYS
+        case 'unitPrice':
+          return edits?.unitPrice ?? formatPriceCZK(unitPrice, 2)
+        case 'totalWithoutVat':
+          return edits?.totalWithoutVat ?? formatPriceCZK(total, 2)
+        case 'budget':
+          return edits?.budget ?? formatPriceCZK(total, 2)
+        default:
+          return ''
+      }
+    },
+    [rowEdits]
+  )
 
   const normalizedCartItems = cartItems.map((item) => ({
     ...item,
@@ -170,8 +222,8 @@ export default function OrderItemsCart({ onRequestClearCart }: OrderItemsCartPro
             <div className="table-responsive">
               <table className="table align-middle mb-0 order-items-cart table-order-items">
                 <colgroup>
-                  <col className="col-item" style={{ width: 'calc(22% - 16px)' }} />
-                  <col className="col-discount" style={{ width: '24%' }} />
+                  <col className="col-item" style={{ width: showDiscountColumn ? 'calc(22% - 16px)' : 'calc(46% - 16px)' }} />
+                  {showDiscountColumn && <col className="col-discount" style={{ width: '24%' }} />}
                   <col className="col-validity" style={{ width: '7%' }} />
                   <col className="col-quantity" style={{ width: '9%' }} />
                   <col className="col-unit-price" style={{ width: '11%' }} />
@@ -184,7 +236,7 @@ export default function OrderItemsCart({ onRequestClearCart }: OrderItemsCartPro
                     <th className="col-item" style={{ textAlign: 'left' }}>
                       Položka
                     </th>
-                    <th className="col-discount">Sleva</th>
+                    {showDiscountColumn && <th className="col-discount">Sleva</th>}
                     <th className="col-validity" style={{ textAlign: 'center' }}>
                       Platnost
                     </th>
@@ -202,6 +254,7 @@ export default function OrderItemsCart({ onRequestClearCart }: OrderItemsCartPro
                   </tr>
                 </thead>
                 <tbody>
+                  {/* Všechny řádky (včetně „Služba na objednávku“ s cenou 0 Kč) používají EditableCell stejně – Admin modré linky, Obchodník read-only */}
                   {normalizedCartItems.map((item) => {
                     const totalWithoutVat =
                       item.unitPriceWithoutVat *
@@ -210,43 +263,73 @@ export default function OrderItemsCart({ onRequestClearCart }: OrderItemsCartPro
                     return (
                       <tr key={item.serviceId}>
                         <td className="col-item">
-                          <span className="item-name premium-service-title" style={{ fontSize: '16px' }}>
-                            {(() => {
-                              const formatted = formatItemNameForDisplay(item.name)
-                              if (typeof formatted === 'string') return formatted
-                              return (
-                                <>
-                                  {formatted.line1}
-                                  <br />
-                                  {formatted.line2}
-                                </>
-                              )
-                            })()}
-                          </span>
+                          {role === 'admin' && item.name === 'Služba na objednávku' ? (
+                            <EditableCell
+                              value={getDisplayValue(
+                                item.serviceId,
+                                'itemName',
+                                item,
+                                totalWithoutVat
+                              )}
+                              isEditable={true}
+                              onEdit={() =>
+                                setEditModal({ serviceId: item.serviceId, field: 'itemName' })
+                              }
+                              align="left"
+                              valueClassName="item-name premium-service-title order-items-cart-item-name-link"
+                            />
+                          ) : (
+                            <span className="item-name premium-service-title" style={{ fontSize: '16px' }}>
+                              {(() => {
+                                const formatted = formatItemNameForDisplay(item.name)
+                                if (typeof formatted === 'string') return formatted
+                                return (
+                                  <>
+                                    {formatted.line1}
+                                    <br />
+                                    {formatted.line2}
+                                  </>
+                                )
+                              })()}
+                            </span>
+                          )}
                         </td>
-                        <td className="col-discount">
-                          <div
-                            className="d-flex gap-1 align-items-center flex-nowrap"
-                            role="group"
-                            aria-label="Sleva"
-                          >
-                            {DISCOUNT_OPTIONS.map((option) => (
-                              <button
-                                key={option.value}
-                                type="button"
-                                className={`quantity-option ${item.discountPercent === option.value ? 'active' : ''}`}
-                                onClick={() => updateItemDiscount(item.serviceId, option.value)}
-                                aria-pressed={item.discountPercent === option.value}
-                              >
-                                {option.label}
-                              </button>
-                            ))}
-                          </div>
-                        </td>
+                        {showDiscountColumn && (
+                          <td className="col-discount">
+                            <div
+                              className="d-flex gap-1 align-items-center flex-nowrap"
+                              role="group"
+                              aria-label="Sleva"
+                            >
+                              {DISCOUNT_OPTIONS.map((option) => (
+                                <button
+                                  key={option.value}
+                                  type="button"
+                                  className={`quantity-option ${item.discountPercent === option.value ? 'active' : ''}`}
+                                  onClick={() => updateItemDiscount(item.serviceId, option.value)}
+                                  aria-pressed={item.discountPercent === option.value}
+                                >
+                                  {option.label}
+                                </button>
+                              ))}
+                            </div>
+                          </td>
+                        )}
                         <td className="col-validity" style={{ textAlign: 'center' }}>
-                          <span className="text-muted" style={{ fontSize: '14px' }}>
-                            {VALIDITY_DAYS}
-                          </span>
+                          <EditableCell
+                            value={getDisplayValue(
+                              item.serviceId,
+                              'validity',
+                              item,
+                              totalWithoutVat
+                            )}
+                            isEditable={role === 'admin'}
+                            onEdit={() =>
+                              setEditModal({ serviceId: item.serviceId, field: 'validity' })
+                            }
+                            align="center"
+                            valueClassName="text-muted"
+                          />
                         </td>
                         <td className="col-quantity">
                           <div className="stepper" role="group" aria-label="Počet">
@@ -278,19 +361,55 @@ export default function OrderItemsCart({ onRequestClearCart }: OrderItemsCartPro
                           </div>
                         </td>
                         <td className="col-unit-price" style={{ textAlign: 'right' }}>
-                          <span className="package-card-price" style={{ fontSize: '14px' }}>
-                            {formatPriceCZK(item.unitPriceWithoutVat, 2)}
-                          </span>
+                          <EditableCell
+                            value={getDisplayValue(
+                              item.serviceId,
+                              'unitPrice',
+                              item,
+                              totalWithoutVat
+                            )}
+                            isEditable={role === 'admin'}
+                            onEdit={() =>
+                              setEditModal({ serviceId: item.serviceId, field: 'unitPrice' })
+                            }
+                            align="right"
+                            valueClassName="package-card-price"
+                          />
                         </td>
                         <td className="col-total-without-vat" style={{ textAlign: 'right' }}>
-                          <span className="package-card-price" style={{ fontSize: '14px' }}>
-                            {formatPriceCZK(totalWithoutVat, 2)}
-                          </span>
+                          <EditableCell
+                            value={getDisplayValue(
+                              item.serviceId,
+                              'totalWithoutVat',
+                              item,
+                              totalWithoutVat
+                            )}
+                            isEditable={role === 'admin'}
+                            onEdit={() =>
+                              setEditModal({
+                                serviceId: item.serviceId,
+                                field: 'totalWithoutVat',
+                              })
+                            }
+                            align="right"
+                            valueClassName="package-card-price"
+                          />
                         </td>
                         <td className="col-budget" style={{ textAlign: 'right' }}>
-                          <span className="package-card-price" style={{ fontSize: '14px' }}>
-                            {formatPriceCZK(totalWithoutVat, 2)}
-                          </span>
+                          <EditableCell
+                            value={getDisplayValue(
+                              item.serviceId,
+                              'budget',
+                              item,
+                              totalWithoutVat
+                            )}
+                            isEditable={role === 'admin'}
+                            onEdit={() =>
+                              setEditModal({ serviceId: item.serviceId, field: 'budget' })
+                            }
+                            align="right"
+                            valueClassName="package-card-price"
+                          />
                         </td>
                         <td className="col-actions" style={{ textAlign: 'center' }}>
                           <button
@@ -309,6 +428,41 @@ export default function OrderItemsCart({ onRequestClearCart }: OrderItemsCartPro
                 </tbody>
               </table>
             </div>
+            <ValueEditModal
+              open={editModal.serviceId != null && editModal.field != null}
+              currentValue={
+                editModal.serviceId && editModal.field
+                  ? (() => {
+                      const item = normalizedCartItems.find(
+                        (i) => i.serviceId === editModal.serviceId
+                      )
+                      if (!item) return ''
+                      const total =
+                        item.unitPriceWithoutVat *
+                        item.quantity *
+                        (1 - (item.discountPercent ?? 0) / 100)
+                      return getDisplayValue(
+                        editModal.serviceId,
+                        editModal.field,
+                        item,
+                        total
+                      )
+                    })()
+                  : ''
+              }
+              onConfirm={(newValue) => {
+                if (!editModal.serviceId || !editModal.field) return
+                setRowEdits((prev) => ({
+                  ...prev,
+                  [editModal.serviceId]: {
+                    ...prev[editModal.serviceId],
+                    [editModal.field!]: newValue,
+                  },
+                }))
+                setEditModal({ serviceId: null, field: null })
+              }}
+              onClose={() => setEditModal({ serviceId: null, field: null })}
+            />
             <div className="order-items-cart-footer-wrapper">
               <div className="order-items-cart-footer-row">
                 <div className="order-items-cart-footer-block">

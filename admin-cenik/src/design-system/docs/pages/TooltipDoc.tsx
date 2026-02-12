@@ -1,5 +1,5 @@
 import { Info } from 'lucide-react'
-import { Heading, Text, Stack, Tooltip } from '../../index'
+import { Heading, Text, Stack, Tooltip, PricingHintTableContent } from '../../index'
 import './DocPage.css'
 
 export default function TooltipDoc() {
@@ -8,21 +8,27 @@ export default function TooltipDoc() {
       <div>
         <Heading level={1}>Tooltip</Heading>
         <Text as="p" variant="body" muted style={{ marginTop: 8 }}>
-          První klik otevře, druhý klik nebo klik mimo zavře. Přístupné z klávesnice (Enter/Space). Nepřesouvá layout.
+          První klik otevře, druhý klik nebo klik mimo zavře. Přístupné z klávesnice (Enter/Space). Nepřesouvá layout. Na menších šířkách se obsah panelu scrolluje (max-height + overflow-y).
         </Text>
       </div>
 
       <section>
-        <Heading level={2}>Ukázka</Heading>
+        <Heading level={2}>Ukázka s hint tabulkou (info ikona u ceny)</Heading>
+        <Text as="p" variant="bodySm" muted style={{ marginTop: 8 }}>
+          Klik na info ikonu otevře reálnou tabulku slev (Počet, Cena před slevou, Sleva, Cena po slevě). Stejný obsah jako v Pricing Card.
+        </Text>
         <div style={{ marginTop: 16 }}>
           <Tooltip
             trigger={<Info size={16} strokeWidth={2} />}
             title="Informace o ceně"
+            aria-label="Informace o ceně"
           >
-            <div>
-              <strong>Název produktu</strong>
-              <p style={{ margin: '8px 0 0' }}>Tabulka cen podle množství a slev.</p>
-            </div>
+            <PricingHintTableContent
+              title="Inzerát práce 30 + SuperBoost"
+              unitPrice={5990}
+              hasQuantityOptions
+              maxQuantity={20}
+            />
           </Tooltip>
         </div>
       </section>

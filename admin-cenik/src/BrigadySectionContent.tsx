@@ -1,24 +1,27 @@
 import { useState, useEffect } from 'react'
-import { basicAdsServices } from './data/basicAdsServices'
+import { brigadyServices } from './data/brigadyServices'
 import { useCart } from './contexts/CartContext'
 import PriceInfoPopover from './PriceInfoPopover'
 import { formatPriceCZK, getDiscountForQuantity, quantityFromLabel } from './utils/pricing'
 import type { BasicAdService } from './types'
 
-interface BasicAdRowProps {
+const SERVICE_ID_PREFIX = 'brigady-'
+
+interface BrigadyRowProps {
   service: BasicAdService
   quantity: number
   setQuantity: (v: number) => void
   index: number
 }
 
-function BasicAdRow({ service, quantity, setQuantity, index }: BasicAdRowProps) {
+function BrigadyRow({ service, quantity, setQuantity, index }: BrigadyRowProps) {
   const { addOrUpdateItem, updateItemQuantity, getItemQuantity } = useCart()
   const hasQuantityOptions = (service.quantityOptions?.length ?? 0) > 0
   const [selectedQuantityIndex, setSelectedQuantityIndex] = useState<number | null>(null)
   const showStepper = quantity > 0
+  const serviceId = `${SERVICE_ID_PREFIX}${service.id}`
 
-  const cartQuantity = getItemQuantity(`basic-${service.id}`)
+  const cartQuantity = getItemQuantity(serviceId)
   useEffect(() => {
     if (cartQuantity !== quantity) {
       setQuantity(cartQuantity)
@@ -56,13 +59,13 @@ function BasicAdRow({ service, quantity, setQuantity, index }: BasicAdRowProps) 
 
   const updateCartQuantity = (newQuantity: number) => {
     if (newQuantity === 0) {
-      updateItemQuantity(`basic-${service.id}`, 0)
+      updateItemQuantity(serviceId, 0)
       setSelectedQuantityIndex(null)
     } else {
-      const cartQty = getItemQuantity(`basic-${service.id}`)
+      const cartQty = getItemQuantity(serviceId)
       if (cartQty === 0) {
         addOrUpdateItem({
-          serviceId: `basic-${service.id}`,
+          serviceId,
           name: service.title,
           unitPriceWithoutVat: service.priceCZK,
           quantity: newQuantity,
@@ -70,7 +73,7 @@ function BasicAdRow({ service, quantity, setQuantity, index }: BasicAdRowProps) 
           validityDays: '365',
         })
       } else {
-        updateItemQuantity(`basic-${service.id}`, newQuantity)
+        updateItemQuantity(serviceId, newQuantity)
       }
     }
   }
@@ -244,8 +247,8 @@ function BasicAdRow({ service, quantity, setQuantity, index }: BasicAdRowProps) 
   )
 }
 
-export default function BasicAdsSectionContent() {
-  const [quantities, setQuantities] = useState(basicAdsServices.map(() => 0))
+export default function BrigadySectionContent() {
+  const [quantities, setQuantities] = useState(brigadyServices.map(() => 0))
 
   const setQuantity = (index: number, value: number) => {
     setQuantities((prev) => {
@@ -256,9 +259,9 @@ export default function BasicAdsSectionContent() {
   }
 
   return (
-    <div className="basic-ads-section">
-      {basicAdsServices.map((service, index) => (
-        <BasicAdRow
+    <div className="brigady-section">
+      {brigadyServices.map((service, index) => (
+        <BrigadyRow
           key={service.id}
           service={service}
           quantity={quantities[index]}

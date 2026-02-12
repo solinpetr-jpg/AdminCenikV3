@@ -1,11 +1,13 @@
+/** České formátování: mezera jako oddělovač tisíců, čárka jako desetinná. */
+function formatNumberCz(value: number, fractionDigits: number): string {
+  const fixed = value.toFixed(fractionDigits)
+  const [intPart, decPart] = fixed.split('.')
+  const withSpaces = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, '\u00A0')
+  return fractionDigits > 0 ? `${withSpaces},${decPart}` : withSpaces
+}
+
 export function formatPriceCZK(value: number, fractionDigits = 0): string {
-  return (
-    new Intl.NumberFormat('cs-CZ', {
-      style: 'decimal',
-      minimumFractionDigits: fractionDigits,
-      maximumFractionDigits: fractionDigits,
-    }).format(value) + ' Kč'
-  )
+  return formatNumberCz(value, fractionDigits) + ' Kč'
 }
 
 export function quantityFromLabel(label: string | number): number {

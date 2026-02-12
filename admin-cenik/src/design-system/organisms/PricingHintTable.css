@@ -76,6 +76,11 @@
   border-bottom: 1px solid var(--ds-border-subtle);
 }
 
+.ds-pricing-hint-table th.ds-pricing-hint-th--right,
+.ds-pricing-hint-table td.ds-pricing-hint-td--right {
+  text-align: right;
+}
+
 .ds-pricing-hint-table td {
   padding: var(--ds-space-2) var(--ds-space-3) var(--ds-space-2) 0;
   border-bottom: 1px solid var(--ds-border-subtle);
@@ -99,6 +104,19 @@
   font-size: 0.625rem;
   font-weight: 900;
   font-family: var(--ds-font-secondary);
+}
+
+.ds-pricing-hint-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.ds-pricing-hint-content .ds-pricing-hint-title:first-child {
+  padding: 0 var(--ds-space-5);
+  padding-top: var(--ds-space-4);
 }
 
 .ds-pricing-hint-footer {

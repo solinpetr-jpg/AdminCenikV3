@@ -13,6 +13,92 @@ body {
   margin: 0;
 }
 
+/* Role switch bar – layout: bílé pozadí, zarovnáno s obsahem stránky */
+.role-switch-bar-wrap {
+  background: linear-gradient(to bottom, #fff 0%, #fafbfc 100%);
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset;
+}
+.role-switch-bar-wrap .container.order-page-container {
+  padding-top: 18px;
+  padding-bottom: 18px;
+  background-color: transparent !important;
+}
+.role-switch-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0;
+  flex-wrap: wrap;
+}
+.role-switch-label {
+  font-family: "Open Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.role-switch-pill {
+  display: inline-flex;
+  border-radius: 9999px;
+  padding: 4px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+.role-switch-segment {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.25;
+  cursor: pointer;
+  border: none;
+  border-radius: 9999px;
+  background: transparent;
+  color: #64748b;
+  transition: color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+}
+.role-switch-segment:first-child {
+  border-radius: 9999px 0 0 9999px;
+}
+.role-switch-segment:last-child {
+  border-radius: 0 9999px 9999px 0;
+}
+.role-switch-segment--active {
+  background: #1b3c98;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(27, 60, 152, 0.35), 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+.role-switch-segment:hover:not(.role-switch-segment--active) {
+  background: #e2e8f0;
+  color: #475569;
+}
+.role-switch-segment--active:hover {
+  background: #162d7a;
+  box-shadow: 0 4px 12px rgba(27, 60, 152, 0.4), 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.role-switch-segment:focus {
+  outline: none;
+}
+.role-switch-segment:focus-visible {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(27, 60, 152, 0.4);
+}
+.role-switch-segment--active:focus-visible {
+  box-shadow: 0 2px 8px rgba(27, 60, 152, 0.35), 0 0 0 2px #fff, 0 0 0 4px rgba(27, 60, 152, 0.5);
+}
+.role-switch-description {
+  font-family: "Open Sans", sans-serif;
+  font-size: 13px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
 /* Šířka obsahu stránky objednávky */
 .order-page-container {
   max-width: 1340px;
@@ -21,7 +107,7 @@ body {
 
 /* Mezera mezi kartami a akordeony na stránce objednávky */
 .order-page-section-gap {
-  margin-top: 32px;
+  margin-top: 24px;
 }
 
 /* Heading/H1 – Figma Design System */
@@ -88,9 +174,8 @@ body {
   background-color: #fff;
   border-radius: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
-  padding: 16px 24px; /* osmičková soustava: 2 × 8px, 3 × 8px */
-  min-height: 72px !important;
-  height: 72px !important;
+  padding: 24px; /* 24px ze všech stran */
+  min-height: 80px !important;
   display: flex !important;
   align-items: center !important;
 }
@@ -187,7 +272,7 @@ body {
 /* Vnitřní řádek s obsahem - má padding; flex-start aby pravý blok měl vždy stejnou úroveň */
 .premium-service-row {
   font-family: "Open Sans", sans-serif;
-  min-height: 96px; /* fixní výška jako při aplikované slevě (text slevy + varianty + cena) */
+  min-height: 112px; /* fixní výška řádku */
   align-items: flex-start; /* pravý blok zarovnán nahoru, pak min-height + center = stejná úroveň textu slevy */
   padding-left: 24px !important; /* osmičková soustava: 3 × 8px - padding zleva */
   padding-right: 24px !important; /* osmičková soustava: 3 × 8px - padding zprava */
@@ -199,6 +284,13 @@ body {
   grid-template-columns: minmax(200px, 1fr) auto;
   gap: 16px;
   align-items: center;
+}
+/* Accordion sekce: řádek služby – vertikální padding přesně 24px (py-6), výška řádku = obsah + 48px */
+.order-accordion-section .premium-service-row,
+.premium-accordion .premium-service-row {
+  min-height: unset;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
 }
 .premium-service-row-title {
   min-width: 0;
@@ -307,6 +399,8 @@ body {
   /* border-top odstraněn */
 }
 
+/* Další produkty používá stejné třídy jako Základní inzerce / Brigády: .premium-service-row-wrapper, .premium-service-row--grid, .premium-service-cta-wrapper, .btn-cta--primary, .stepper */
+
 /* Hover efekt na řádky v akordeonech – stejný jako hover na akordeon hlavičku */
 .premium-service-row-wrapper:hover {
   background-color: #f8f9fa !important;
@@ -318,7 +412,7 @@ body {
   align-items: center;
   gap: 16px; /* základní mezera mezi jednotlivými bloky (label, varianty, cena, CTA) */
   flex-shrink: 0; /* pravý blok se nezmenšuje */
-  min-height: 96px; /* stejná výška jako řádek – obsah (text slevy + tlačítka) je vycentrovaný, takže vždy na stejné úrovni */
+  min-height: 112px; /* stejná výška jako řádek */
 }
 /* Wrapper pro CTA/stepper s fixními rozměry, aby spacing neskákal při přepnutí */
 .premium-service-cta-wrapper {
@@ -839,6 +933,55 @@ body {
   background-color: #EEF0F7 !important; /* světle modrá - vždy rozbalené */
   border-bottom: 1px solid #EBEDF3;
   cursor: default !important; /* není klikatelné */
+}
+
+/* Admin-only editovatelné buňky – modrý klikatelný link */
+.editable-cell-link {
+  font-size: 14px;
+  font-family: inherit;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #1B3C98;
+  cursor: pointer;
+  text-decoration: none;
+  border-radius: 2px;
+}
+.editable-cell-link:hover {
+  text-decoration: underline;
+  color: #152d6e;
+}
+.editable-cell-link:focus-visible {
+  outline: 2px solid #1B3C98;
+  outline-offset: 2px;
+}
+.editable-cell-link.package-card-price {
+  font-weight: 600;
+}
+
+/* V tabulce Položky objednávky – editovatelné buňky (název, Platnost, Cena za kus, …) vždy modrý klikatelný link; žádná výjimka podle typu položky */
+.order-items-cart.table-order-items tbody td.col-item .editable-cell-link,
+.order-items-cart.table-order-items tbody td.col-validity .editable-cell-link,
+.order-items-cart.table-order-items tbody td.col-unit-price .editable-cell-link,
+.order-items-cart.table-order-items tbody td.col-total-without-vat .editable-cell-link,
+.order-items-cart.table-order-items tbody td.col-budget .editable-cell-link {
+  color: #1B3C98 !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
+.order-items-cart.table-order-items tbody td.col-item .editable-cell-link:hover,
+.order-items-cart.table-order-items tbody td.col-validity .editable-cell-link:hover,
+.order-items-cart.table-order-items tbody td.col-unit-price .editable-cell-link:hover,
+.order-items-cart.table-order-items tbody td.col-total-without-vat .editable-cell-link:hover,
+.order-items-cart.table-order-items tbody td.col-budget .editable-cell-link:hover {
+  color: #152d6e !important;
+  text-decoration: underline !important;
+}
+
+/* Jen „Služba na objednávku“ – editovatelný název: původní typografie (16px, font-weight 600), modrý proklikávací link */
+.order-items-cart.table-order-items tbody td.col-item .editable-cell-link.order-items-cart-item-name-link {
+  font-size: 16px !important;
+  font-weight: 600 !important;
 }
 
 /* Kontejner pro portál lišty – vždy dole na obrazovce, nad obsahem */
