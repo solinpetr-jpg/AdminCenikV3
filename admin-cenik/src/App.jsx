@@ -1,14 +1,27 @@
+import { useEffect, useState } from 'react'
 import OrderPage from './OrderPage.jsx'
-import DesignSystemPage from './DesignSystemPage.jsx'
 import { CartProvider } from './contexts/CartContext.jsx'
+import DesignSystemPage from './DesignSystemPage.jsx'
 
 export default function App() {
-  const normalizedPath = window.location.pathname.replace(/\/+$/, '') || '/'
-  const isDesignSystemPage = normalizedPath === '/designsystem'
+  const [isDesignSystem, setIsDesignSystem] = useState(
+    typeof window !== 'undefined' && window.location.hash === '#design-system',
+  )
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      setIsDesignSystem(window.location.hash === '#design-system')
+    }
+
+    window.addEventListener('hashchange', handleHashChange)
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange)
+    }
+  }, [])
 
   return (
     <CartProvider>
-      {isDesignSystemPage ? <DesignSystemPage /> : <OrderPage />}
+      {isDesignSystem ? <DesignSystemPage /> : <OrderPage />}
     </CartProvider>
   )
 }

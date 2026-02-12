@@ -121,8 +121,8 @@ body {
 .order-items-cart-header .rounded,
 .order-items-cart-header .rounded.d-flex,
 .order-items-cart-header .rounded.d-flex.align-items-center.justify-content-center,
-section .rounded.d-flex.align-items-center.justify-content-center,
-section .col-auto .rounded.d-flex.align-items-center.justify-content-center {
+.order-accordion-section .premium-section-header .rounded.d-flex.align-items-center.justify-content-center,
+.order-accordion-section .premium-section-header .rounded.d-flex.align-items-center.justify-content-center.flex-shrink-0 {
   border-radius: 12px !important;
   width: 40px !important;
   height: 40px !important;
@@ -193,11 +193,10 @@ section .col-auto .rounded.d-flex.align-items-center.justify-content-center {
   padding-right: 24px !important; /* osmičková soustava: 3 × 8px - padding zprava */
 }
 
-/* Grid layout: stejné sloupce pro všechny řádky – discount-label vždy na stejném X */
+/* Grid layout: dva hlavní sloupce – název vlevo, pravý blok (label + množství + cena + CTA) vpravo */
 .premium-service-row--grid {
   display: grid;
-  /* První sloupec min 200px, aby pravý blok (label) začínal vždy na stejném X bez ohledu na délku názvu */
-  grid-template-columns: minmax(200px, 1fr) 144px 224px 128px 128px;
+  grid-template-columns: minmax(200px, 1fr) auto;
   gap: 16px;
   align-items: center;
 }
@@ -213,9 +212,9 @@ section .col-auto .rounded.d-flex.align-items-center.justify-content-center {
   justify-content: center;
   align-items: center;
   border-radius: 9999px; /* zakulacený (pill-shaped) dle screenshotu */
-  background: rgba(22, 162, 73, 0.2);
+  background: rgba(9, 146, 76, 0.2);
   border: none;
-  color: #16a249;
+  color: #09924C;
   font-family: Inter, sans-serif; /* stejný font jako NEJOBLÍBENĚJŠÍ */
   font-size: 10px;
   font-weight: 900; /* stejný font-weight jako NEJOBLÍBENĚJŠÍ (Black/Extra Bold) */
@@ -313,19 +312,11 @@ section .col-auto .rounded.d-flex.align-items-center.justify-content-center {
   background-color: #f8f9fa !important;
 }
 
-/* Pravý blok: explicitní 4 sloupce (bez subgrid kvůli kompatibilitě), label vždy ve sloupci 1 = stejné X */
-.premium-service-row--grid .premium-service-row-right {
-  grid-column: 2 / -1;
-  display: grid;
-  grid-template-columns: 144px 224px 128px 128px;
-  align-items: center;
-  min-height: 96px;
-}
-/* Fallback pro řádky bez --grid (např. jiné sekce) */
+/* Pravý blok: flex layout – label 240px, varianty 224px, cena 128px, CTA 128px; 16px mezi textem slevy a akcí 3x */
 .premium-service-row-right {
   display: flex;
   align-items: center;
-  gap: 16px; /* osmičková soustava: 2 × 8px */
+  gap: 16px; /* základní mezera mezi jednotlivými bloky (label, varianty, cena, CTA) */
   flex-shrink: 0; /* pravý blok se nezmenšuje */
   min-height: 96px; /* stejná výška jako řádek – obsah (text slevy + tlačítka) je vycentrovaný, takže vždy na stejné úrovni */
 }
@@ -340,21 +331,23 @@ section .col-auto .rounded.d-flex.align-items-center.justify-content-center {
   justify-content: flex-start; /* stepper zarovnaný vlevo v rámci wrapperu */
   flex-shrink: 0;
 }
+/* Label sloupec: jednotný left start pro „Přidejte 3+ ks…“ i „Sleva 10%…“, šířka 240px, gap 24px k variantám */
 .premium-service-discount-note {
-  width: 144px; /* osmičková soustava: 18 × 8px - fixní šířka pro text slevy, aby neskákal */
-  min-width: 144px;
+  width: 240px;
+  min-width: 240px;
   height: 24px; /* osmičková soustava: 3 × 8px */
-  color: #16a249; /* stejná barva jako text OBJEDNÁVKA */
+  color: #09924C; /* stejná barva jako text OBJEDNÁVKA */
   font-family: Inter, sans-serif;
   font-size: 14px;
   font-weight: 500;
-  line-height: 24px; /* osmičková soustava: 3 × 8px */
+  line-height: 24px;
   display: flex;
   align-items: center;
-  justify-content: flex-end; /* oba texty zarovnané doprava v buňce */
-  flex-shrink: 0; /* text slevy se nezmenšuje */
-  align-self: center; /* stejná vertikální úroveň jako tlačítka 3x/5x/10x */
-  text-align: right !important;
+  justify-content: flex-start; /* oba texty zarovnané vlevo – stejný left start */
+  margin-right: -32px; /* zmenší mezeru mezi textem slevy a variantami o 32 px (o 16 px víc oproti předchozímu stavu), bez posunu ostatních bloků doprava */
+  flex-shrink: 0;
+  align-self: center;
+  text-align: left !important;
 }
 /* Placeholder pro text slevy v PremiumServicesAccordion */
 .premium-service-discount-note--placeholder {
@@ -402,6 +395,24 @@ section .col-auto .rounded.d-flex.align-items-center.justify-content-center {
 }
 .package-card .card-body {
   padding: 24px;
+  text-align: left !important;
+}
+.package-card {
+  text-align: left !important;
+}
+/* TOP karta – veškerý text doleva (přepíše Bootstrap .text-end a podobné); blok ceny vyjmut – zarovnán vpravo dole */
+.package-card .text-end,
+.package-card [class*="justify-content-end"],
+.package-card .package-card-discount-note,
+.package-card .package-card-add-for-discount-note,
+.package-card .package-card-price-old,
+.package-card .card-title,
+.package-card .card-subtitle-text,
+.package-card .card-quantity-label {
+  text-align: left !important;
+}
+.package-card .d-flex.justify-content-start {
+  justify-content: flex-start !important;
 }
 
 /* Karta „Nejoblíbenější“ – badge nad kartou dle screenshotu */
@@ -457,7 +468,7 @@ section .col-auto .rounded.d-flex.align-items-center.justify-content-center {
   min-height: 24px;
   display: flex;
   align-items: center;
-  color: #16a249; /* stejná barva jako text OBJEDNÁVKA */
+  color: #09924C; /* stejná barva jako text OBJEDNÁVKA */
   font-family: Inter, sans-serif;
   font-size: 14px;
   font-style: normal;
@@ -465,14 +476,25 @@ section .col-auto .rounded.d-flex.align-items-center.justify-content-center {
   line-height: 24px; /* osmičková soustava: 3 × 8px */
 }
 
-/* „Přidejte 3+ ks pro slevu“ – stejná barva jako podtitul; zarovnání doprava jako „Sleva 15%“ */
-.package-card-add-for-discount-note,
+/* „Přidejte 3+ ks pro slevu“ – stejná barva jako podtitul; v kartě balíčku zarovnání doleva */
+.package-card .package-card-add-for-discount-note {
+  color: #65758b !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+  text-align: left !important;
+  justify-content: flex-start !important;
+}
+/* Hint „Přidejte 3+ ks…“ – barva a font; zarovnání vlevo dědí z .premium-service-discount-note (stejný label sloupec) */
 .premium-service-add-for-discount-note {
   color: #65758b !important;
   font-weight: 500 !important;
   white-space: nowrap !important;
-  text-align: right !important;
-  justify-content: flex-end !important;
+  text-align: left !important;
+  justify-content: flex-start !important;
+}
+/* Základní inzerce: posun textu „Přidejte 3+ ks pro slevu“ doleva o 16px */
+#zakladni-inzerce-content .premium-service-add-for-discount-note {
+  margin-left: -16px;
 }
 
 /* Dělící čára v TOP kartě – barva #E1E7EF, 12 px mezera pod čárou */
@@ -482,7 +504,19 @@ section .col-auto .rounded.d-flex.align-items-center.justify-content-center {
   margin-bottom: 16px; /* osmičková soustava: 2 × 8px */
 }
 
-/* Blok ceny – fixní min. výška jako při aktivní slevě; zarovnání doprava dolů dle Figmy (node 18577-45601) */
+/* Blok ceny v TOP kartě – fixní min. výška; zarovnání vpravo dole */
+.package-card .package-card-price-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  min-height: 88px;
+  text-align: right;
+}
+.package-card .package-card-price-block .d-flex {
+  justify-content: flex-end !important;
+}
+/* Obecně (např. v řádcích) blok ceny doprava */
 .package-card-price-block {
   display: flex;
   flex-direction: column;
@@ -508,19 +542,24 @@ section .col-auto .rounded.d-flex.align-items-center.justify-content-center {
   justify-content: flex-end;
 }
 
-/* Quantity switcher – Figma Design System (node 18577-45436) */
-.quantity-option-wrapper {
+/* Quantity switcher – Figma Design System (node 18577-45436); scoped aby neovlivňoval layout DS stránky */
+.ds-preview .quantity-option-wrapper,
+.package-card .quantity-option-wrapper,
+.premium-service-row .quantity-option-wrapper {
   position: relative;
   display: inline-block;
   width: 64px; /* stejná šířka jako tlačítko, aby badge byl vycentrovaný */
 }
-/* Wrapper pro varianty množství - padding-top pro vzdálenost 8px od "MNOŽSTVÍ" k badge (pouze v kartě, ne v řádku akordeonu) */
-.d-flex.flex-wrap[role="group"][aria-label="Množství"] {
+/* Wrapper pro varianty množství - padding-top pro vzdálenost 8px od "MNOŽSTVÍ" k badge (pouze v kartě a v DS preview, ne v řádku akordeonu) */
+.ds-preview .d-flex.flex-wrap[role="group"][aria-label="Množství"],
+.package-card .d-flex.flex-wrap[role="group"][aria-label="Množství"] {
   padding-top: 16px; /* osmičková soustava: 2 × 8px - vzdálenost 8px od "MNOŽSTVÍ" k badge (16px padding - 8px top badge = 8px) */
 }
 /* V řádku akordeonu žádný padding-top – text „Přidejte 3+ ks“ i „Sleva 15%“ mají být na stejné úrovni jako tlačítka 3x/5x/10x */
 .premium-service-row-right .d-flex.flex-wrap[role="group"][aria-label="Množství"] {
   padding-top: 0;
+  width: 224px;
+  min-width: 224px; /* stejný „sloupec“ pro varianty jako placeholder */
 }
 /* Slevové badge (-10%, -15%, -20%) – zelené, plné, dle screenshotu */
 .quantity-badge {
@@ -528,7 +567,7 @@ section .col-auto .rounded.d-flex.align-items-center.justify-content-center {
   top: -0.5rem;
   left: 50%;
   transform: translateX(-50%); /* vycentrování badge nad tlačítkem */
-  background-color: #16a249;
+  background-color: #09924C;
   color: #ffffff;
   font-size: 0.625rem;
   font-weight: 900 !important; /* Black (Ultra Bold) pro slevové badge */
@@ -544,7 +583,7 @@ section .col-auto .rounded.d-flex.align-items-center.justify-content-center {
   position: absolute;
   top: -8px;
   right: -8px;
-  background-color: #16a249;
+  background-color: #09924C;
   color: #ffffff;
   font-size: 0.625rem;
   font-weight: 900 !important;
@@ -560,8 +599,11 @@ section .col-auto .rounded.d-flex.align-items-center.justify-content-center {
   justify-content: center;
   line-height: 1;
 }
-/* Buttons/Pill small – Figma Design System (node 18588-10179) */
-.quantity-option {
+/* Buttons/Pill small – Figma Design System (node 18588-10179); scoped pod .ds-preview a kontexty objednávky */
+.ds-preview .quantity-option,
+.package-card .quantity-option,
+.order-items-cart .quantity-option,
+.premium-service-row .quantity-option {
   background-color: #eef0f8;
   color: #0f1729;
   border: 2px solid transparent; /* stejná tloušťka jako .active, aby karta neskákala při přepnutí */
@@ -581,11 +623,17 @@ section .col-auto .rounded.d-flex.align-items-center.justify-content-center {
   text-align: center;
   transition: background-color 0.15s, border-color 0.15s, color 0.15s;
 }
-.quantity-option:hover {
+.ds-preview .quantity-option:hover,
+.package-card .quantity-option:hover,
+.order-items-cart .quantity-option:hover,
+.premium-service-row .quantity-option:hover {
   background-color: #e2e5f0;
 }
 /* Vybrané množství (např. 5x) – Figma Design System (node 18588-10179). Border zůstává 2px, jen barva. */
-.quantity-option.active {
+.ds-preview .quantity-option.active,
+.package-card .quantity-option.active,
+.order-items-cart .quantity-option.active,
+.premium-service-row .quantity-option.active {
   background-color: #1b3c98; /* tmavě modrá vybraná varianta */
   border: 2px solid #1b3c98;
   color: #ffffff;
@@ -593,8 +641,11 @@ section .col-auto .rounded.d-flex.align-items-center.justify-content-center {
   box-shadow: 0 1px 2px rgba(27, 60, 152, 0.08);
 }
 
-/* CTA Buttons/Button big – Figma Design System */
-.btn-cta {
+/* CTA Buttons/Button big – Figma Design System; scoped aby neovlivňoval tlačítka v layoutu DS */
+.ds-preview .btn-cta,
+.package-card .btn-cta,
+.premium-service-row .btn-cta,
+.premium-accordion .btn-cta {
   color: var(--Basic-White, #fff);
   font-family: "Open Sans", sans-serif;
   font-size: 16px;
@@ -604,7 +655,10 @@ section .col-auto .rounded.d-flex.align-items-center.justify-content-center {
 }
 
 /* Primární CTA „Přidat“ v TOP kartě – Figma (node 18577-45546): větší, 130px, sloupec, zarovnání doleva */
-.btn-cta--primary {
+.ds-preview .btn-cta--primary,
+.package-card .btn-cta--primary,
+.premium-service-row .btn-cta--primary,
+.premium-accordion .btn-cta--primary {
   display: flex;
   width: 128px; /* osmičková soustava: 16 × 8px */
   height: 48px;
@@ -622,20 +676,35 @@ section .col-auto .rounded.d-flex.align-items-center.justify-content-center {
   box-shadow: none;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
-.btn-cta--primary:hover {
+.ds-preview .btn-cta--primary:hover,
+.package-card .btn-cta--primary:hover,
+.premium-service-row .btn-cta--primary:hover,
+.premium-accordion .btn-cta--primary:hover {
   background: var(--btn-primary-hover) !important;
   box-shadow: var(--btn-primary-ring) !important;
 }
-.btn-cta--primary .btn-cta__icon,
-.btn-cta--primary .btn-cta__label {
+.ds-preview .btn-cta--primary .btn-cta__icon,
+.ds-preview .btn-cta--primary .btn-cta__label,
+.package-card .btn-cta--primary .btn-cta__icon,
+.package-card .btn-cta--primary .btn-cta__label,
+.premium-service-row .btn-cta--primary .btn-cta__icon,
+.premium-service-row .btn-cta--primary .btn-cta__label,
+.premium-accordion .btn-cta--primary .btn-cta__icon,
+.premium-accordion .btn-cta--primary .btn-cta__label {
   white-space: nowrap;
   flex-shrink: 0;
 }
-.btn-cta--primary .btn-cta__icon {
+.ds-preview .btn-cta--primary .btn-cta__icon,
+.package-card .btn-cta--primary .btn-cta__icon,
+.premium-service-row .btn-cta--primary .btn-cta__icon,
+.premium-accordion .btn-cta--primary .btn-cta__icon {
   line-height: 1;
   font-size: 18px;
 }
-.btn-cta--primary .btn-cta__label {
+.ds-preview .btn-cta--primary .btn-cta__label,
+.package-card .btn-cta--primary .btn-cta__label,
+.premium-service-row .btn-cta--primary .btn-cta__label,
+.premium-accordion .btn-cta--primary .btn-cta__label {
   line-height: 130%;
 }
 
@@ -658,13 +727,18 @@ section .col-auto .rounded.d-flex.align-items-center.justify-content-center {
 /* Řádek CTA/stepper + cena – fixní min. výška, aby karta neskákala při kliku na Přidat nebo výběru varianty */
 .package-card-actions-row {
   min-height: 48px;
+  align-items: flex-end;
 }
 .package-card .btn-cta--primary {
   height: 48px;
 }
 
-/* Stepper – layout dle screenshotu: všechny prvky v jednom kontejneru */
-.stepper {
+/* Stepper – layout dle screenshotu; scoped pod .ds-preview a kontexty objednávky */
+.ds-preview .stepper,
+.package-card .stepper,
+.premium-service-row .stepper,
+.order-items-cart .stepper,
+.saved-offer-item-controls .stepper {
   display: inline-flex;
   align-items: center;
   gap: 0; /* bez mezer mezi prvky */
@@ -678,7 +752,11 @@ section .col-auto .rounded.d-flex.align-items-center.justify-content-center {
   overflow: hidden;
   flex-shrink: 0; /* stepper se nezmenšuje */
 }
-.stepper-btn {
+.ds-preview .stepper-btn,
+.package-card .stepper-btn,
+.premium-service-row .stepper-btn,
+.order-items-cart .stepper-btn,
+.saved-offer-item-controls .stepper-btn {
   flex: 0 0 40px; /* pevná šířka tlačítka bez roztahování */
   width: 40px;
   height: 48px; /* stejná výška jako kontejner stepperu */
@@ -698,14 +776,26 @@ section .col-auto .rounded.d-flex.align-items-center.justify-content-center {
   cursor: pointer;
   transition: background-color 0.15s;
 }
-.stepper-btn:hover:not(:disabled) {
+.ds-preview .stepper-btn:hover:not(:disabled),
+.package-card .stepper-btn:hover:not(:disabled),
+.premium-service-row .stepper-btn:hover:not(:disabled),
+.order-items-cart .stepper-btn:hover:not(:disabled),
+.saved-offer-item-controls .stepper-btn:hover:not(:disabled) {
   background-color: rgba(0, 0, 0, 0.05);
 }
-.stepper-btn:disabled {
+.ds-preview .stepper-btn:disabled,
+.package-card .stepper-btn:disabled,
+.premium-service-row .stepper-btn:disabled,
+.order-items-cart .stepper-btn:disabled,
+.saved-offer-item-controls .stepper-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
-.stepper-input {
+.ds-preview .stepper-input,
+.package-card .stepper-input,
+.premium-service-row .stepper-input,
+.order-items-cart .stepper-input,
+.saved-offer-item-controls .stepper-input {
   flex: 0 0 40px; /* pevná šířka inputu bez roztahování */
   width: 40px;
   min-width: 40px;
@@ -723,11 +813,23 @@ section .col-auto .rounded.d-flex.align-items-center.justify-content-center {
   -moz-appearance: textfield;
   flex-shrink: 0; /* input se nezmenšuje */
 }
-.stepper-input:focus {
+.ds-preview .stepper-input:focus,
+.package-card .stepper-input:focus,
+.premium-service-row .stepper-input:focus,
+.order-items-cart .stepper-input:focus,
+.saved-offer-item-controls .stepper-input:focus {
   outline: none;
 }
-.stepper-input::-webkit-outer-spin-button,
-.stepper-input::-webkit-inner-spin-button {
+.ds-preview .stepper-input::-webkit-outer-spin-button,
+.ds-preview .stepper-input::-webkit-inner-spin-button,
+.package-card .stepper-input::-webkit-outer-spin-button,
+.package-card .stepper-input::-webkit-inner-spin-button,
+.premium-service-row .stepper-input::-webkit-outer-spin-button,
+.premium-service-row .stepper-input::-webkit-inner-spin-button,
+.order-items-cart .stepper-input::-webkit-outer-spin-button,
+.order-items-cart .stepper-input::-webkit-inner-spin-button,
+.saved-offer-item-controls .stepper-input::-webkit-outer-spin-button,
+.saved-offer-item-controls .stepper-input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
@@ -1904,33 +2006,33 @@ table.order-items-cart.table-order-items tbody td.col-budget span {
   box-shadow: none !important;
 }
 
+/* Kontejner pro portál ceníkového popoveru – full-screen vrstva, nikdy neořezává */
+#price-info-portal-root {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* Popover – v portálu (body) vždy nad veškerým obsahem */
 .price-info-panel {
-  position: absolute;
-  top: 50%;
-  right: calc(100% + 8px); /* zobrazit vedle ička (nalevo od něj) */
-  z-index: 1000;
-  width: 480px; /* dostatečná šířka pro ceny (včetně Kč), aby se neorezávaly */
+  width: 440px; /* mírně užší panel, aby se vešel lépe do viewportu a nepřekrýval okolní UI */
   min-width: 320px;
-  max-width: min(480px, calc(100vw - 24px));
+  max-width: min(440px, calc(100vw - 24px));
   box-sizing: border-box;
   border-radius: 16px;
   border: 1px solid #d1d5db;
   background: #fff;
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
   padding: 12px 14px 10px;
-  overflow: hidden; /* čisté hranice panelu */
-  opacity: 0;
-  visibility: hidden;
-  transform: translate(-4px, -50%);
-  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
-  pointer-events: none;
+  overflow: visible; /* žádný vnitřní scroll – vždy je vidět celý obsah tabulky */
 }
 
-.price-info-trigger:hover .price-info-panel,
-.price-info-trigger:focus-within .price-info-panel {
-  opacity: 1;
-  visibility: visible;
-  transform: translate(0, -50%);
+/* Panel vykreslený v portálu do body – fixed, nad vším (left/top z JS, viewport clamping) */
+.price-info-panel--portal {
+  position: fixed !important;
+  z-index: 99999 !important;
   pointer-events: auto;
 }
 
@@ -1947,7 +2049,7 @@ table.order-items-cart.table-order-items tbody td.col-budget span {
 
 .price-info-header {
   display: grid;
-  grid-template-columns: 52px minmax(90px, 1fr) 56px minmax(100px, 1fr); /* sloupce cen s min. šířkou, aby se Kč neorezávalo */
+  grid-template-columns: 52px minmax(80px, 1fr) 56px minmax(90px, 1fr); /* jemně užší sloupce, aby se text „Cena po slevě“ a částky nelámaly na druhý řádek */
   gap: 8px;
   padding: 4px 0 6px;
   border-bottom: 1px solid #e5e7eb;
@@ -1968,12 +2070,13 @@ table.order-items-cart.table-order-items tbody td.col-budget span {
 }
 
 .price-info-rows {
-  display: block; /* bez scrollu - vše musí být vidět */
+  display: block;
+  flex-shrink: 0;
 }
 
 .price-info-row {
   display: grid;
-  grid-template-columns: 52px minmax(90px, 1fr) 56px minmax(100px, 1fr); /* stejná mřížka jako hlavička */
+  grid-template-columns: 52px minmax(80px, 1fr) 56px minmax(90px, 1fr); /* stejná mřížka jako hlavička */
   gap: 8px;
   padding: 3px 0;
   border-bottom: 1px solid #f1f5f9;
@@ -2037,6 +2140,10 @@ table.order-items-cart.table-order-items tbody td.col-budget span {
   color: #64748b;
   font-size: 13px;
   line-height: 16px;
+  position: sticky;
+  bottom: 0;
+  background: #fff;
+  flex-shrink: 0;
 }
 
 .order-items-cart-footer-value {

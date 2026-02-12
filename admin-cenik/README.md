@@ -1,4 +1,27 @@
-# React + Vite
+# Admin Cenik V3
+
+React + Vite aplikace pro objednávku a cenovou nabídku.
+
+## Design System
+
+Stránka **Design System** (`/designsystem`) obsahuje přehled všech UI komponent bez možnosti kopírování kódu:
+
+| Sekce | Komponenty / prvky |
+|-------|---------------------|
+| Typografie | Heading H2, podtitul, card subtitle, MNOŽSTVÍ label |
+| Tlačítka | Outline (Darovat zdarma, …), Secondary (Uložit nabídku), Primary (Vytvořit objednávku) |
+| Komponenty | Badge (NEJOBLÍBENĚJŠÍ, Přidáno, -15 %), varianty množství (3x/5x/10x), stepper, formulář |
+| Accordion | `OrderAccordionSection` – záhlaví sekce a rozbalovací obsah |
+| Karta balíčku | `PackageCard` – TOP balíčky (název, cena, varianty, CTA) |
+| Popover ceníku | `PriceInfoPopover` – ikona ℹ️ a tabulka cen + hint |
+| Texty a štítky | „Přidejte 3+ ks pro slevu“, Sleva 15 %, platnost |
+| Tabulka položek | Ukázka `OrderItemsCart` – hlavičky a řádek (Položka, Sleva, Platnost, Množství, Ceny, Akce) |
+
+Komponenty: `App`, `OrderPage`, `OrderAccordionSection`, `TopPackagesSection`, `PackageCard`, `BasicAdsSectionContent`, `PremiumServicesAccordion`, `OrderItemsCart`, `PriceInfoPopover`, `CartContext`, `DesignSystemPage`.
+
+---
+
+## React + Vite (šablona)
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

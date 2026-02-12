@@ -237,13 +237,13 @@ export default function PackageCard({ package: pkg }) {
               <span className="btn-cta__label">Přidat</span>
             </button>
           )}
-          <div className="package-card-price-block text-end">
+          <div className="package-card-price-block">
             {discountedPrice != null ? (
               <>
                 <div className="package-card-price-old">
                   {formatPriceCZK(totalPrice)}
                 </div>
-                <div className="d-flex align-items-center justify-content-end gap-2">
+                <div className="d-flex align-items-center justify-content-start gap-2">
                   <div className="package-card-price">
                     {formatPriceCZK(discountedPrice)}
                   </div>
@@ -255,7 +255,7 @@ export default function PackageCard({ package: pkg }) {
                 </div>
               </>
             ) : (
-              <div className="d-flex align-items-center justify-content-end gap-1">
+              <div className="d-flex align-items-center justify-content-start gap-1">
                 <span className="package-card-price">
                   {formatPriceCZK(stepperValue > 0 ? totalPrice : pkg.priceCZK)}
                 </span>
