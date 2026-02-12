@@ -1,0 +1,41 @@
+.ds-text {
+  margin: 0;
+}
+
+.ds-text--body {
+  color: var(--ds-text);
+  font-family: var(--ds-font-secondary);
+  font-size: var(--ds-text-body-size);
+  font-weight: var(--ds-text-body-weight);
+  line-height: var(--ds-text-body-line);
+}
+
+.ds-text--bodySm {
+  font-family: var(--ds-font-secondary);
+  font-size: var(--ds-text-body-sm-size);
+  font-weight: 400;
+  line-height: var(--ds-text-body-sm-line);
+}
+
+.ds-text--label {
+  color: var(--ds-text-muted);
+  font-family: var(--ds-font-secondary);
+  font-size: var(--ds-text-label-size);
+  font-weight: var(--ds-text-label-weight);
+  line-height: var(--ds-text-label-line);
+  text-transform: uppercase;
+}
+
+.ds-text--muted,
+.ds-text--body.ds-text--muted,
+.ds-text--bodySm.ds-text--muted {
+  color: var(--ds-text-muted);
+}
+
+.ds-text--price {
+  color: var(--ds-text);
+  font-family: var(--ds-font-primary);
+  font-size: var(--ds-text-price-lg);
+  font-weight: 600;
+  line-height: var(--ds-text-h1-line);
+}

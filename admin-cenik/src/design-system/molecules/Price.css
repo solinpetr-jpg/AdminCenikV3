@@ -1,0 +1,26 @@
+.ds-price {
+  color: var(--ds-text);
+  font-family: var(--ds-font-primary);
+  font-weight: 600;
+  line-height: var(--ds-text-h1-line);
+  font-variant-numeric: tabular-nums;
+}
+
+.ds-price--lg {
+  font-size: var(--ds-text-price-lg);
+}
+
+.ds-price--md {
+  font-size: var(--ds-text-price-md);
+}
+
+.ds-price--sm {
+  font-size: var(--ds-text-price-sm);
+}
+
+.ds-price__suffix {
+  margin-left: var(--ds-space-1);
+  font-weight: 400;
+  color: var(--ds-text-muted);
+  font-size: 0.85em;
+}

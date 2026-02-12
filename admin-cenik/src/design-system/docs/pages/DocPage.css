@@ -1,0 +1,55 @@
+.ds-doc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--ds-space-4);
+}
+
+/* Karty vedle sebe max 4 – jako v hlavním projektu (col-12 col-md-6 col-lg-4 → max 4) */
+.ds-doc-grid--cards {
+  grid-template-columns: 1fr;
+}
+@media (min-width: 576px) {
+  .ds-doc-grid--cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 768px) {
+  .ds-doc-grid--cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 1200px) {
+  .ds-doc-grid--cards {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.ds-doc-code {
+  margin: 0;
+  padding: var(--ds-space-4);
+  background: var(--ds-bg-chip);
+  border-radius: var(--ds-radius-sm);
+  font-size: var(--ds-text-body-sm-size);
+  overflow-x: auto;
+}
+
+.ds-doc-props table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ds-doc-props th,
+.ds-doc-props td {
+  padding: var(--ds-space-2) var(--ds-space-3);
+  text-align: left;
+  border-bottom: 1px solid var(--ds-border-subtle);
+}
+
+.ds-doc-props th {
+  font-weight: 600;
+  color: var(--ds-text-muted);
+}
+
+.ds-doc-snippet {
+  margin-top: var(--ds-space-2);
+}

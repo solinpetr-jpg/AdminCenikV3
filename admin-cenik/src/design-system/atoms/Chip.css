@@ -1,0 +1,71 @@
+.ds-chip-wrapper {
+  position: relative;
+  display: inline-block;
+  width: var(--ds-chip-width);
+}
+
+.ds-chip-badge {
+  position: absolute;
+  top: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--ds-success);
+  color: var(--ds-text-inverse);
+  font-size: 0.625rem;
+  font-weight: 900;
+  padding: 0.125rem 0.375rem;
+  border-radius: var(--ds-radius-full);
+  white-space: nowrap;
+  z-index: 1;
+  border: none;
+}
+
+.ds-chip {
+  width: var(--ds-chip-width);
+  height: var(--ds-chip-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--ds-space-4);
+  background-color: var(--ds-bg-chip);
+  color: var(--ds-text-strong);
+  border: 2px solid transparent;
+  border-radius: var(--ds-radius-sm);
+  font-family: var(--ds-font-secondary);
+  font-size: var(--ds-text-chip);
+  font-weight: var(--ds-text-chip-weight);
+  line-height: var(--ds-space-5);
+  text-align: center;
+  cursor: pointer;
+  transition: background-color var(--ds-transition-fast), border-color var(--ds-transition-fast),
+    color var(--ds-transition-fast);
+  box-sizing: border-box;
+}
+
+.ds-chip:hover:not(:disabled):not(.ds-chip--selected) {
+  background-color: var(--ds-bg-chip-hover);
+}
+
+.ds-chip--selected {
+  background-color: var(--ds-accent);
+  border-color: var(--ds-accent);
+  color: #ffffff !important; /* vybraný chip: vždy bílý text na modrém (přepíše děděné .text-muted) */
+  font-weight: var(--ds-text-chip-active-weight);
+  box-shadow: var(--ds-shadow-chip-active);
+}
+
+.ds-chip--selected:hover {
+  /* Selected má vždy prioritu nad hover – zůstává modrý i při hoveru. */
+  background-color: var(--ds-accent);
+  border-color: var(--ds-accent);
+  color: #ffffff !important;
+}
+
+.ds-chip:focus {
+  outline: none;
+}
+
+.ds-chip:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}

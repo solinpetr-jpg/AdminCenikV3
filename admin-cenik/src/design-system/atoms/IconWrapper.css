@@ -1,0 +1,9 @@
+.ds-icon-wrapper {
+  flex-shrink: 0;
+  border-radius: var(--ds-radius-md);
+  background-color: var(--ds-accent-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ds-accent);
+}

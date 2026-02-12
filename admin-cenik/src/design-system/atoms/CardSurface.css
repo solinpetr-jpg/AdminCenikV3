@@ -1,0 +1,16 @@
+.ds-card-surface {
+  background-color: var(--ds-bg-surface);
+  border: none;
+  border-radius: var(--ds-radius-lg);
+  box-shadow: var(--ds-shadow-card);
+  transition: background-color var(--ds-transition-base);
+}
+
+.ds-card-surface--highlight {
+  border: 2px solid var(--ds-accent);
+  background: var(--ds-accent-005);
+}
+
+.ds-card-surface--selected {
+  background-color: var(--ds-bg-surface-soft);
+}

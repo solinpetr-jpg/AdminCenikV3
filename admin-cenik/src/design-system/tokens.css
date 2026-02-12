@@ -1,0 +1,156 @@
+/**
+ * Design System – Foundations (extracted from existing project)
+ * Barvy, typografie, spacing, radius, shadow, z-index, states.
+ */
+
+:root {
+  /* ========== Colors – Primary (CTA, akce) ========== */
+  --ds-primary: #C91617;
+  --ds-primary-hover: #A91214;
+  --ds-primary-ring: 0 0 0 3px rgba(201, 22, 23, 0.28);
+  --ds-primary-focus-bg: rgba(201, 22, 23, 0.06);
+  --ds-primary-active-bg: rgba(201, 22, 23, 0.12);
+
+  /* ========== Colors – Secondary / Accent (ikony, zvýraznění) ========== */
+  --ds-accent: #1B3C98;
+  --ds-accent-soft: #1B3C981A;
+  --ds-accent-soft-2: rgba(27, 60, 152, 0.08);
+  --ds-accent-005: rgba(27, 60, 152, 0.005);
+
+  /* ========== Colors – Semantic (success, danger) ========== */
+  --ds-success: #09924C;
+  --ds-success-soft: rgba(9, 146, 76, 0.2);
+  --ds-danger: #C91617;
+  --ds-danger-soft: rgba(201, 22, 23, 0.06);
+
+  /* ========== Colors – Neutral (text, surfaces) ========== */
+  --ds-text: #000000;
+  --ds-text-strong: #0F172A;
+  --ds-text-muted: #65758b;
+  --ds-text-muted-alt: #64748B;
+  --ds-text-disabled: #9CA3AF;
+  --ds-text-inverse: #ffffff;
+
+  --ds-bg-body: #f8f9fa;
+  --ds-bg-surface: #ffffff;
+  --ds-bg-surface-soft: #F9FAFD;
+  --ds-bg-surface-hover: #f8f9fa;
+  --ds-bg-accordion-open: #EEF0F7;
+  --ds-bg-chip: #eef0f8;
+  --ds-bg-chip-hover: #e2e5f0;
+  --ds-bg-selected: #eef0f8;
+  --ds-bg-disabled: #F8FAFC;
+
+  --ds-border-subtle: #eef0f8;
+  --ds-border-divider: #E1E7EF;
+  --ds-border-strong: #E2E6F0;
+  --ds-border-modal: #E5E7EB;
+  --ds-border-input: #CBD5E1;
+  --ds-border-input-focus: var(--ds-accent);
+  --ds-border-input-error: var(--ds-danger);
+  --ds-border-disabled: #A9A9A9;
+
+  --ds-backdrop: rgba(15, 23, 42, 0.55);
+  --ds-modal-title: #111827;
+  --ds-modal-close: #6B7280;
+
+  /* ========== Typography ========== */
+  --ds-font-primary: "Open Sans", system-ui, -apple-system, sans-serif;
+  --ds-font-secondary: Inter, system-ui, -apple-system, sans-serif;
+
+  --ds-text-h1-size: 36px;
+  --ds-text-h1-weight: 600;
+  --ds-text-h1-line: 130%;
+
+  --ds-text-h2-size: 28px;
+  --ds-text-h2-weight: 600;
+  --ds-text-h2-line: 130%;
+
+  --ds-text-h3-size: 20px;
+  --ds-text-h3-weight: 600;
+  --ds-text-h3-line: 130%;
+
+  --ds-text-title-size: 18px;
+  --ds-text-title-weight: 600;
+  --ds-text-title-line: 130%;
+
+  --ds-text-body-size: 16px;
+  --ds-text-body-weight: 400;
+  --ds-text-body-line: 24px;
+
+  --ds-text-body-sm-size: 14px;
+  --ds-text-body-sm-line: 24px;
+
+  --ds-text-label-size: 12px;
+  --ds-text-label-weight: 400;
+  --ds-text-label-line: 16px;
+
+  --ds-text-badge-size: 10px;
+  --ds-text-badge-weight: 900;
+  --ds-text-badge-sm-size: 12px;
+
+  --ds-text-price-lg: 24px;
+  --ds-text-price-md: 18px;
+  --ds-text-price-sm: 14px;
+
+  --ds-text-stepper: 18px;
+  --ds-text-stepper-weight: 400;
+  --ds-text-chip: 16px;
+  --ds-text-chip-weight: 500;
+  --ds-text-chip-active-weight: 700;
+
+  /* ========== Spacing (8px scale) ========== */
+  --ds-space-0: 0;
+  --ds-space-1: 4px;
+  --ds-space-2: 8px;
+  --ds-space-3: 12px;
+  --ds-space-4: 16px;
+  --ds-space-5: 24px;
+  --ds-space-6: 32px;
+  --ds-space-7: 40px;
+  --ds-space-8: 48px;
+  --ds-space-10: 72px;
+  --ds-space-12: 96px;
+
+  /* ========== Border radius ========== */
+  --ds-radius-sm: 8px;
+  --ds-radius-md: 12px;
+  --ds-radius-lg: 16px;
+  --ds-radius-pill: 32px;
+  --ds-radius-full: 9999px;
+
+  /* ========== Shadow ========== */
+  --ds-shadow-card: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --ds-shadow-popover: 0 8px 24px rgba(15, 23, 42, 0.12);
+  --ds-shadow-modal: 0 24px 48px rgba(2, 6, 23, 0.28);
+  --ds-shadow-badge: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --ds-shadow-chip-active: 0 1px 2px rgba(27, 60, 152, 0.08);
+
+  /* ========== Z-index ========== */
+  --ds-z-dropdown: 1000;
+  --ds-z-sticky: 1020;
+  --ds-z-fixed: 1030;
+  --ds-z-modal-backdrop: 1040;
+  --ds-z-modal: 1050;
+  --ds-z-popover: 1060;
+  --ds-z-tooltip: 1070;
+  --ds-z-toast: 1080;
+  --ds-z-max: 2147483647;
+
+  /* ========== Layout ========== */
+  --ds-container-max: 1340px;
+  --ds-section-gap: 32px;
+  --ds-header-height: 72px;
+  --ds-icon-box: 40px;
+  --ds-cta-height: 48px;
+  --ds-cta-width: 128px;
+  --ds-stepper-width: 120px;
+  --ds-stepper-btn-width: 40px;
+  --ds-chip-width: 64px;
+  --ds-chip-height: 48px;
+
+  /* ========== Transitions ========== */
+  --ds-transition-fast: 0.15s ease;
+  --ds-transition-base: 0.2s ease;
+  --ds-transition-slow: 0.3s ease-out;
+}

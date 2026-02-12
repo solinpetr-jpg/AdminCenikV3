@@ -1,0 +1,50 @@
+.ds-tooltip-trigger {
+  display: inline-flex;
+}
+
+.ds-tooltip-trigger-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--ds-accent);
+  cursor: pointer;
+  border-radius: var(--ds-radius-sm);
+}
+
+.ds-tooltip-trigger-btn:hover {
+  color: var(--ds-accent);
+}
+
+.ds-tooltip-trigger-btn:focus {
+  outline: none;
+}
+
+.ds-tooltip-trigger-btn:focus-visible {
+  box-shadow: 0 0 0 2px var(--ds-accent-soft);
+}
+
+.ds-tooltip-panel {
+  position: fixed;
+  z-index: var(--ds-z-tooltip);
+  max-width: min(440px, calc(100vw - 24px));
+  max-height: min(520px, 85vh);
+  padding: var(--ds-space-4);
+  background: var(--ds-bg-surface);
+  border: 1px solid var(--ds-border-strong);
+  border-radius: var(--ds-radius-lg);
+  box-shadow: var(--ds-shadow-popover);
+  overflow: auto;
+}
+
+.ds-tooltip-panel--left {
+  /* positioning done via JS or data attributes if needed */
+}
+
+.ds-tooltip-panel--right,
+.ds-tooltip-panel--top,
+.ds-tooltip-panel--bottom {
+  /* same */
+}

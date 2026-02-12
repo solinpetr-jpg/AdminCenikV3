@@ -1,0 +1,130 @@
+.ds-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-space-2);
+  padding: var(--ds-space-2) var(--ds-space-5);
+  min-height: var(--ds-cta-height);
+  height: var(--ds-cta-height);
+  border-radius: var(--ds-radius-pill);
+  font-family: var(--ds-font-primary);
+  font-size: var(--ds-text-body-size);
+  font-weight: 600;
+  line-height: var(--ds-text-h1-line);
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--ds-transition-base), box-shadow var(--ds-transition-base),
+    border-color var(--ds-transition-base), color var(--ds-transition-base);
+  box-sizing: border-box;
+}
+
+.ds-btn:focus {
+  outline: none;
+}
+
+.ds-btn__icon,
+.ds-btn__label {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.ds-btn__icon--left {
+  margin-left: 0;
+}
+
+.ds-btn__icon--right {
+  margin-right: 0;
+}
+
+/* Primary */
+.ds-btn--primary {
+  background: var(--ds-primary);
+  color: var(--ds-text-inverse);
+  min-width: var(--ds-cta-width);
+}
+
+.ds-btn--primary:hover:not(:disabled) {
+  background: var(--ds-primary-hover);
+  box-shadow: var(--ds-primary-ring);
+}
+
+.ds-btn--primary:focus-visible {
+  box-shadow: var(--ds-primary-ring);
+}
+
+.ds-btn--primary:disabled {
+  background: var(--ds-border-modal);
+  color: var(--ds-text-disabled);
+  cursor: not-allowed;
+}
+
+/* Secondary */
+.ds-btn--secondary {
+  background: transparent;
+  color: var(--ds-primary);
+  border: 1px solid var(--ds-primary);
+}
+
+.ds-btn--secondary:hover:not(:disabled) {
+  background: var(--ds-primary-focus-bg);
+  border-color: var(--ds-primary);
+  box-shadow: var(--ds-primary-ring);
+}
+
+.ds-btn--secondary:focus-visible {
+  box-shadow: var(--ds-primary-ring);
+}
+
+.ds-btn--secondary:disabled {
+  border-color: var(--ds-border-disabled);
+  color: var(--ds-border-disabled);
+  background: var(--ds-bg-disabled);
+  cursor: not-allowed;
+}
+
+/* Tertiary (text link style) */
+.ds-btn--tertiary {
+  background: transparent;
+  color: var(--ds-primary);
+  border: 1px solid transparent;
+  font-family: var(--ds-font-secondary);
+  font-weight: 500;
+}
+
+.ds-btn--tertiary:hover:not(:disabled) {
+  background: var(--ds-primary-focus-bg);
+  border-color: var(--ds-primary);
+  box-shadow: var(--ds-primary-ring);
+}
+
+.ds-btn--tertiary:focus-visible {
+  box-shadow: var(--ds-primary-ring);
+}
+
+/* Ghost danger (e.g. clear cart) */
+.ds-btn--ghost-danger {
+  background: transparent;
+  color: var(--ds-danger);
+  border: none;
+  padding: 0;
+  min-height: auto;
+  height: auto;
+  font-size: var(--ds-text-body-sm-size);
+}
+
+.ds-btn--ghost-danger:hover:not(:disabled) {
+  text-decoration: underline;
+}
+
+/* Sizes */
+.ds-btn--sm {
+  min-height: 40px;
+  height: 40px;
+  padding: var(--ds-space-2) var(--ds-space-4);
+  font-size: var(--ds-text-body-sm-size);
+}
+
+.ds-btn--full {
+  width: 100%;
+  min-width: 0;
+}

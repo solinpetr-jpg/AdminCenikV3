@@ -1,0 +1,7 @@
+.ds-section-card {
+  padding: var(--ds-space-5);
+}
+
+.ds-section-card.ds-card-surface--selected {
+  background-color: var(--ds-bg-surface-soft);
+}

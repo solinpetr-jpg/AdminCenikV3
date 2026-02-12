@@ -1,0 +1,110 @@
+.ds-pricing-hint-backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--ds-backdrop);
+  z-index: var(--ds-z-modal-backdrop);
+}
+
+.ds-pricing-hint-modal {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - 24px);
+  max-width: 440px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--ds-bg-surface);
+  border: 1px solid var(--ds-border-modal);
+  border-radius: var(--ds-radius-lg);
+  box-shadow: var(--ds-shadow-modal);
+  z-index: var(--ds-z-modal);
+  overflow: hidden;
+}
+
+.ds-pricing-hint-header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ds-space-2);
+  padding: var(--ds-space-5) var(--ds-space-5) 0;
+}
+
+.ds-pricing-hint-title {
+  margin: 0;
+  color: var(--ds-modal-title);
+  font-family: var(--ds-font-primary);
+  font-size: var(--ds-text-h3-size);
+  font-weight: 600;
+}
+
+.ds-pricing-hint-close {
+  flex-shrink: 0;
+  padding: var(--ds-space-1);
+  border: none;
+  background: transparent;
+  color: var(--ds-modal-close);
+  cursor: pointer;
+  border-radius: var(--ds-radius-sm);
+}
+
+.ds-pricing-hint-close:hover {
+  color: var(--ds-text);
+  background: var(--ds-bg-surface-hover);
+}
+
+.ds-pricing-hint-table-wrap {
+  flex: 1;
+  overflow: auto;
+  padding: var(--ds-space-4) var(--ds-space-5);
+}
+
+.ds-pricing-hint-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--ds-text-body-sm-size);
+}
+
+.ds-pricing-hint-table th {
+  text-align: left;
+  color: var(--ds-text-muted);
+  font-family: var(--ds-font-secondary);
+  font-weight: 500;
+  padding: var(--ds-space-2) var(--ds-space-3) var(--ds-space-2) 0;
+  border-bottom: 1px solid var(--ds-border-subtle);
+}
+
+.ds-pricing-hint-table td {
+  padding: var(--ds-space-2) var(--ds-space-3) var(--ds-space-2) 0;
+  border-bottom: 1px solid var(--ds-border-subtle);
+  font-variant-numeric: tabular-nums;
+}
+
+.ds-pricing-hint-row--discounted td {
+  color: var(--ds-success);
+}
+
+.ds-pricing-hint-no-discount {
+  color: var(--ds-text-muted);
+}
+
+.ds-pricing-hint-discount-badge {
+  display: inline-block;
+  padding: 0.125rem 0.375rem;
+  border-radius: var(--ds-radius-full);
+  background-color: var(--ds-success);
+  color: var(--ds-text-inverse);
+  font-size: 0.625rem;
+  font-weight: 900;
+  font-family: var(--ds-font-secondary);
+}
+
+.ds-pricing-hint-footer {
+  flex-shrink: 0;
+  margin: 0;
+  padding: var(--ds-space-3) var(--ds-space-5) var(--ds-space-5);
+  font-size: var(--ds-text-body-sm-size);
+  color: var(--ds-text-muted);
+}

@@ -1,0 +1,14 @@
+.ds-quantity-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-space-2);
+  align-items: center;
+}
+
+.ds-quantity-chips--compact {
+  padding-top: 0;
+}
+
+.ds-quantity-chips:not(.ds-quantity-chips--compact) {
+  padding-top: var(--ds-space-4);
+}

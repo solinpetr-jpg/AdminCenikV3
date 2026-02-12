@@ -1,0 +1,28 @@
+.ds-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-1);
+}
+
+.ds-form-field__label {
+  color: var(--ds-text-muted);
+  font-family: var(--ds-font-secondary);
+  font-size: var(--ds-text-label-size);
+  font-weight: var(--ds-text-label-weight);
+  line-height: var(--ds-text-label-line);
+  text-transform: uppercase;
+}
+
+.ds-form-field__required {
+  color: var(--ds-danger);
+}
+
+.ds-form-field__error {
+  color: var(--ds-danger);
+  font-size: var(--ds-text-body-sm-size);
+}
+
+.ds-form-field__hint {
+  color: var(--ds-text-muted);
+  font-size: var(--ds-text-body-sm-size);
+}
