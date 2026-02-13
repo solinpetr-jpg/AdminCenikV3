@@ -12,11 +12,15 @@
 html,
 body {
   margin: 0;
+  overflow-x: hidden;
   background-color: #f8f9fa; /* stejné jako hlavní obsah – žádné šedé pruhy vlevo/vpravo */
 }
 
-/* Role switch bar – layout: bílé pozadí, zarovnáno s obsahem stránky */
+/* Role switch bar – přes celou šířku stránky (breakout z kontejneru) */
 .role-switch-bar-wrap {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  box-sizing: border-box;
   background: linear-gradient(to bottom, #fff 0%, #fafbfc 100%);
   border-bottom: 1px solid #e2e8f0;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset;
@@ -24,6 +28,8 @@ body {
 .role-switch-bar-wrap .container.order-page-container {
   padding-top: 18px;
   padding-bottom: 18px;
+  padding-left: 24px;
+  padding-right: 24px;
   background-color: transparent !important;
 }
 .role-switch-bar {
