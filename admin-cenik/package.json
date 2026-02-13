@@ -11,6 +11,7 @@
     "tunnel": "npx ngrok http 5174"
   },
   "dependencies": {
+    "bootstrap": "^5.3.8",
     "framer-motion": "^12.34.0",
     "lucide-react": "^0.563.0",
     "react": "^19.2.0",
