@@ -35,6 +35,8 @@
     <div id="order-items-bar-root"></div>
     <div id="price-info-portal-root"></div>
 
+    <!-- Vite potřebuje tento tag pro build; brána ho odstraní, pokud není uživatel odemčen -->
+    <script type="module" src="/src/main.tsx" id="app-entry"></script>
     <script>
       (function() {
         var KEY = 'admin-cenik-auth';
@@ -44,10 +46,11 @@
         var input = document.getElementById('password');
         var errEl = document.getElementById('login-error');
 
-        if (sessionStorage.getItem(KEY) === '1') {
+        if (sessionStorage.getItem(KEY) !== '1') {
+          var appScript = document.getElementById('app-entry');
+          if (appScript) appScript.remove();
+        } else {
           gate.classList.add('hidden');
-          loadApp();
-          return;
         }
 
         form.addEventListener('submit', function(e) {
@@ -63,9 +66,11 @@
         });
 
         function loadApp() {
+          if (document.getElementById('app-entry')) return;
           var script = document.createElement('script');
           script.type = 'module';
           script.src = window.location.hostname === 'localhost' ? '/src/main.tsx' : '/assets/app.js';
+          script.id = 'app-entry';
           document.body.appendChild(script);
         }
       })();
