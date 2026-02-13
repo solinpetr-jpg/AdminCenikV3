@@ -20,6 +20,11 @@
       #login-gate button { width: 100%; padding: 12px; font-size: 16px; font-weight: 600; color: #fff; background: #2563eb; border: none; border-radius: 8px; cursor: pointer; }
       #login-gate .error { color: #c00; font-size: 14px; margin-top: 0.5rem; }
       #login-gate.hidden { display: none; }
+      /* Aplikace je skrytá, dokud uživatel neodemkne (gate.hidden) */
+      #root, #order-items-bar-root, #price-info-portal-root { display: none !important; }
+      #login-gate.hidden ~ #root,
+      #login-gate.hidden ~ #order-items-bar-root,
+      #login-gate.hidden ~ #price-info-portal-root { display: block !important; }
     </style>
   </head>
   <body>
@@ -59,6 +64,7 @@
           if (input.value === PASS) {
             sessionStorage.setItem(KEY, '1');
             gate.classList.add('hidden');
+            window.dispatchEvent(new CustomEvent('admin-cenik-unlocked'));
             loadApp();
           } else {
             errEl.textContent = 'Nesprávné heslo.';

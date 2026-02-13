@@ -71,6 +71,25 @@ Pokud jsou pole prázdná a Framework je Vite, nech to tak a jdi dál.
 
 ---
 
+## 8. Přihlášení (login + heslo) před vstupem (volitelně)
+
+Před načtením projektu se zobrazí přihlašovací stránka s polem pro **přihlašovací jméno** a **heslo**. Bez správných údajů se do aplikace nedostaneš.
+
+1. Na Vercelu otevři projekt → **Settings** → **Environment Variables**.
+2. Přidej dvě proměnné:
+   - **Name:** `VITE_ACCESS_LOGIN` → **Value:** např. `admin` (přihlašovací jméno)
+   - **Name:** `VITE_ACCESS_PASSWORD` → **Value:** tvé heslo
+   - **Environment:** zaškrtni Production (a případně Preview).
+3. Ulož a v **Deployments** spusť **Redeploy**, aby se proměnné zahrnuly do buildu.
+
+Po nasazení se na https://admin-cenik-v3.vercel.app/ nejdřív zobrazí stránka „Pro vstup se přihlaste“ s poli **Přihlašovací jméno** a **Heslo**. Po zadání správných údajů se načte aplikace; přihlášení platí v rámci session (do zavření záložky).
+
+- **Jen heslo:** Pokud nastavíš jen `VITE_ACCESS_PASSWORD` (bez `VITE_ACCESS_LOGIN`), kontroluje se pouze heslo; přihlašovací jméno může uživatel nechat prázdné nebo cokoli.
+- **Žádná brána:** Pokud `VITE_ACCESS_PASSWORD` nenastavíš, přihlašovací stránka se nezobrazí (vhodné pro lokální vývoj).
+- Toto je klientská ochrana (proti náhodnému prohlížení). Pro silnější zabezpečení je potřeba serverové přihlášení nebo Vercel Password Protection (placený plán).
+
+---
+
 ## Když něco nevyjde
 
 - **Build failed:** Zkontroluj, že **Root Directory** je opravdu `admin-cenik` (bez překlepů).
