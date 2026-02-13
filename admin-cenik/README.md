@@ -2,6 +2,20 @@
 
 React + Vite aplikace pro objednávku a cenovou nabídku.
 
+## Nasazení – web vždy dostupný (bez localhost / ngrok)
+
+Aby byl web dostupný **pořád**, i když nemáš zapnutý počítač, nasaď ho na Vercel (zdarma):
+
+1. Účet: [vercel.com](https://vercel.com) → Sign up (např. přes GitHub).
+2. **Import projektu:** Add New → Project → Import z tohoto Git repa.
+3. **Root Directory:** nastav na `admin-cenik` (tlačítko Edit vedle názvu projektu).
+4. **Deploy** – Vercel sestaví Vite a nasadí. Dostaneš stálou URL typu `https://admin-cenik-xxx.vercel.app`.
+
+Po každém push do repozitáře se nasazení automaticky znovu spustí. Odkaz zůstane stejný.
+
+- **Lokální vývoj / ngrok:** `npm run dev` + `npm run tunnel` – pro testování na ngrok, když máš zapnutý počítač.
+- **Stálý provoz:** deploy na Vercel – funguje i s vypnutým localhost.
+
 ## Design System
 
 Stránka **Design System** (`/designsystem`) obsahuje přehled všech UI komponent bez možnosti kopírování kódu:
